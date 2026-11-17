@@ -10,6 +10,18 @@ de Weste 8.4.5. Las secciones anteriores de este README que contienen
 quedan como **antecedentes preliminares**, no como el método corregido.
 Los resultados DC y de descarga no se invalidan por ese cambio.
 
+El [README original](README.md) ya documenta el montaje en Custom Compiler
+mediante el [esquemático del inversor](Imagenes/sch_inversor.png).
+Esta captura se incorpora también al informe LaTeX: muestra los modelos
+ne/pe, WN=0.36 um, WP=0.72 um, L=0.18 um y VDD=1.8 V.
+Corresponde al circuito inicial sin carga FO1; los resultados cuantitativos
+del informe provienen de los decks de caracterización descritos aquí.
+El informe también incorpora las curvas de salida originales
+[NMOS](Imagenes/NMOS_Ids_Vds.png) y [PMOS](Imagenes/PMOS_Ids_Vds.png),
+y la [respuesta por esquinas de proceso](Imagenes/transient_inv_esquinas.png).
+Se presentan como caracterización complementaria, conservando sus
+condiciones y sin sustituir los resultados de las nuevas extracciones.
+
 El nuevo flujo es:
 
 1. Calcular compuerta y difusión con los coeficientes del modelo aportados.
@@ -92,10 +104,123 @@ antes de incorporar valores definitivos al informe. La comparación de
 retardos FO1 con resistencias extraídas es una comprobación de transferencia
 entre condiciones distintas, no una identidad garantizada.
 
-**Estado:** cálculo y herramientas preparados; los nuevos decks no se han
-ejecutado localmente porque no hay HSPICE. Las nuevas resistencias y la
-comprobación DC del tamaño analítico están pendientes del servidor.
-Los archivos de la ejecución anterior se mantienen intactos.
+### Primera iteración recibida y analizada
+
+Se procesó [resultados_metodologia_20261117_010133_A0PVhQ](spice_decks/resultados_metodologia_20261117_010133_A0PVhQ).
+Las tres simulaciones concluyeron normalmente, sin advertencias, errores
+ni medidas fallidas. Los resultados derivados están en
+[analisis_metodologia](spice_decks/resultados_metodologia_20261117_010133_A0PVhQ/analisis_metodologia).
+
+| Magnitud | Resultado |
+|---|---:|
+| r medido | 2 |
+| Diferencia FO4-FO3, HL / LH | 7.96798 / 9.82549 ps |
+| Rn RC, W=0.36 um | 5.47719 kohm |
+| Rp RC, W=0.72 um | 6.75404 kohm |
+| Rp RC referido a W=0.36 um | 13.50808 kohm |
+| Rn / Rp referido, convención Weste | 3.79650 / 9.36309 kohm |
+| r propuesto / WP propuesto | 2.46624222803 / 0.887847 um |
+| VM SPICE en r analítico=6.26462740748 | 0.951065 V |
+| Isc pico en r analítico | 34.6291 uA |
+
+El tamaño estático analítico excede el objetivo de VM en 51.065 mV.
+Frente a la descarga con 2 pF, las resistencias RC a igual ancho difieren
+-15.08% (N) y +9.61% (P). Se comparan caracterizaciones efectivas distintas,
+no una resistencia exacta universal.
+
+En r=2, el modelo FO3/FO4 predice FO1 HL/LH de 15.3347/18.9096 ps;
+la simulación FO1 mide 20.7808/24.3265 ps. Los errores son -26.21%/-22.27%.
+La entrada conformada y la comprobación con flancos de 1 ps son condiciones
+diferentes; las capacitancias manuales siguen siendo aproximadas.
+Los cocientes salida/entrada de tiempos 20-80% son 0.746/1.265 (FO3) y
+0.894/1.543 (FO4), para salida de bajada/subida: del mismo orden, no iguales.
+
+La predicción simétrica en r=2.46624222803 es 17.4379 ps, con carga
+4.59315 fF. **No es una medida ni se declara convergencia.**
+El include archivado en la carpeta de resultados conserva r=2 y no se
+modifica. La segunda ejecución se preparó mediante:
+
+```bash
+python3 scripts_py/complete_methodology.py prepare --ratio 2.46624222803
+bash spice_decks/run_methodology.sh
+```
+
+### Segunda iteración recibida y analizada
+
+Se procesó [resultados_metodologia_20261117_010409_up5kCc](spice_decks/resultados_metodologia_20261117_010409_up5kCc).
+Las tres simulaciones concluyeron normalmente, sin errores, advertencias
+ni medidas fallidas. Las tablas están en
+[analisis_metodologia](spice_decks/resultados_metodologia_20261117_010409_up5kCc/analisis_metodologia).
+
+| Magnitud | Primera ejecución | Segunda ejecución |
+|---|---:|---:|
+| r simulado | 2 | 2.46624222803 |
+| Rn RC, W=0.36 um (kohm) | 5.47719 | 5.20719 |
+| Rp RC referido a W=0.36 um (kohm) | 13.50808 | 14.89710 |
+| r propuesto | 2.46624222803 | 2.86086988240 |
+| FO1 HL / LH (ps) | 20.7808 / 24.3265 | 23.7468 / 23.4727 |
+| FO1 promedio (ps) | 22.5537 | 23.6098 |
+| Asimetría FO1 (%) | 15.7211 | 1.16108 |
+
+En la segunda ejecución, `delta_C=2.422473 fF` y las diferencias FO4-FO3
+son 8.74355/10.14262 ps. El modelo recalibrado predice FO1
+16.5783/19.2310 ps: errores -30.19%/-18.07%. Las razones de transición
+salida/entrada son 0.851/1.110 para FO3 y 1.039/1.356 para FO4
+(bajada/subida de salida). VM=0.883971 V e Isc pico=24.1533 uA.
+
+**No hay convergencia demostrada:** el nuevo r propuesto aumenta 16.00%.
+Las resistencias cambian -4.93%/+10.28% (N/P referido) entre extracciones,
+porque cambian también las condiciones de entrada y polarización.
+La comprobación FO1 sí mejora respecto a r=2, pero no supera el equilibrio
+del barrido anterior r=2.425 (0.212%). No se debe confundir simetría FO1
+con un punto fijo de la extracción FO3/FO4, ni asumir que la próxima
+propuesta mejorará FO1.
+
+Los includes archivados y sus mediciones permanecen intactos.
+La tercera ejecución se preparó mediante:
+
+```bash
+python3 scripts_py/complete_methodology.py prepare --ratio 2.86086988240
+bash spice_decks/run_methodology.sh
+```
+
+### Tercera ejecución: serie detenida sin convergencia demostrada
+
+Se procesó [resultados_metodologia_20261117_010626_tFRR4h](spice_decks/resultados_metodologia_20261117_010626_tFRR4h).
+Las tres simulaciones concluyeron normalmente, sin errores, advertencias
+ni medidas fallidas. Sus tablas están en
+[analisis_metodologia](spice_decks/resultados_metodologia_20261117_010626_tFRR4h/analisis_metodologia).
+
+| Magnitud | Resultado |
+|---|---:|
+| r simulado | 2.8608698824 |
+| Rn RC, W=0.36 um | 4.89195 kohm |
+| Rp RC referido a W=0.36 um | 15.98680 kohm |
+| Diferencia FO4-FO3 HL / LH | 9.14324 / 10.44437 ps |
+| delta_C | 2.696454 fF |
+| FO1 HL / LH | 26.1924 / 22.9329 ps |
+| FO1 promedio | 24.5626 ps |
+| Asimetría FO1 | 13.2701% |
+| VM / Isc pico | 0.894083 V / 25.6466 uA |
+| Nueva propuesta, NO simulada | 3.26798453915 |
+
+La asimetría FO1 evoluciona **15.721% -> 1.161% -> 13.270%**.
+La última propuesta aumenta r otro 14.23%: no se demuestra estabilidad.
+Las razones de transición salida/entrada son 0.954/1.004 (FO3) y
+1.172/1.219 (FO4), para bajada/subida de salida; tener pendientes
+comparables no garantiza la convergencia de esta regla.
+El modelo recalibrado predice FO1 17.1645/19.6071 ps, errores
+-34.47%/-14.50%. Frente a descarga, las resistencias RC a igual ancho
+difieren -24.15%/+29.73%.
+
+**Se detiene esta serie sin preparar automáticamente otra ejecución.**
+Tres puntos no prueban divergencia para cualquier número de iteraciones,
+pero sí muestran que no se ha logrado convergencia ni mejora monótona
+de la simetría FO1. Antes de continuar habría que revisar la transferencia
+entre las condiciones FO3/FO4 y FO1 y el escalamiento supuesto con ancho.
+El include de trabajo conserva r=2.8608698824, no la propuesta sin probar.
+El mejor equilibrio medido sigue siendo r=2.425, asimetría 0.212%,
+del barrido previo. No se afirma que 2.b tenga un tamaño convergido.
 
 ## Alcance y condiciones
 
