@@ -1,314 +1,227 @@
-# inversor_minimo_XT018
-Tarea_1_Introducción al diseño de circuitos integrados
+# Caracterización y dimensionamiento de un inversor CMOS
 
-> **Estado del informe:** esta copia conserva los resultados ya disponibles y separa los análisis complementarios de los entregables que todavía requieren simulaciones. Los pendientes están marcados explícitamente; no se deben considerar resultados completos hasta añadir sus datos y gráficas.
+## Alcance y condiciones
 
-## Caracterización preliminar del proceso XT018 (insumo para la Parte 2)
+Proyecto de caracterización de una tecnología de 0.18 micrometros, con alimentación de 1.8 V. Se estudian por separado el centrado de la VTC y la simetría de retardos. Se extrae resistencia efectiva por descarga de capacitor y por retardos de un inversor con carga idéntica (FO1).
 
-### Curvas I-V de transistores mínimos
-#### Fórmula de la resistencia cuando el transistor esta saturado
-$$R_{eff} = \frac{3In(2)}{4} \frac{V_{DD}}{I_{sat}}  \quad(1)$$ 
+Condiciones de las mediciones: HSPICE U-2023.03-SP2, esquina `tm`, temperatura 70 grados Celsius, modelos `ne` y `pe` de las librerías XT018 del servidor. Se dispone de parámetros analíticos XH018 [3]; su correspondencia exacta con esos modelos aún debe verificarse.
 
-#### Fórmula de la resistencia cuando el transistor esta en transición
-$$R_{eff} = \frac{V_{DD}}{I_{H}+I_{L}}  \quad(2)$$
-\
-\
-Los valores para los siguientes cáculos se tomaron de los parámetros para transistores 1.8V (ne,pe) de un proceso XT018 - 0.18 µm. Además para los cáculos realizados, se desprecia $I_{L}$, ya que su valor en comparación con otras corrientes en el circuitos es muy pequeña. Para calcular la resistencia del transistor completo se escaló la corriente por unidad de ancho usando el ancho del transistor.
+El NMOS de referencia usa W=4 lambda=0.36 micrometros y L=2 lambda=0.18 micrometros, con lambda=90 nm. Las difusiones se modelan con áreas W por 5 lambda y perímetros 2W+10 lambda, siguiendo la celda original con contactos. Estas dimensiones se usan como regla escalable de partida, no como una validación DRC nueva.
 
-### Cáculos para transistor NMOS
-A continuación se presentan los cálculo con la ecuación (1).
-$$R_{eff} = \frac{3In(2)}{4} \frac{1.8V}{475 \times 10^{-6} A/{\micro m} \cdot 0.36{\micro m}} \approx 5.5 k\ohm $$  
+Los resultados vigentes están en este documento. El [README original](README.md) no se modifica; las estimaciones iniciales, correcciones y derivaciones ampliadas se conservan en [antecedentes y memoria extendida](README_antecedentes.md), sin considerarse simultáneamente resultados finales.
 
-Ahora con la ecuación (2).
-$$R_{eff} = \frac{1.8V} {(475 \times 10^{-6} A/{\micro m}) \cdot 0.36{\micro m}} \approx 10.6 k\ohm$$
-\
-Para determinar la resistencia unitaria de un transistor NMOS para el proceso XT018 - 0.18 µm se realiza de la siguiente forma.
-$$R_{nueff} = \frac{1.8V} {(475 \times 10^{-6} A/{\micro m})} \approx 3.8 k\ohm * {\micro m}$$
+## 1.a. Dimensionamiento analítico y caracterización DC
 
-Estos valores difieren ya que la ecuación que usa la corriente de saturación solo funcionaría para transistores digitalizados que operen siempre en saturación de velocidad.
-### Análisis empírico
-Para determinar de forma empírica el valor de resistencia del transistor NMOS para el proceso XT018 se montó el deck `nmos_test.sp` y luego se exportaron en un archivo .csv para gráficarlas en python y se obtuvieron las siguientes gráficas.
+### Parámetros y modelo por regiones
 
-![NMOS_Ids_Vds](https://github.com/DJosueMM/inversor_minimo_XH018/assets/125601912/79e5fc9f-8c60-49d7-87f3-55c9065d06c1)
+Se toman de [3] los siguientes parámetros. VT corresponde a W/L=10/0.18 micrometros y VD=0.1 V; K'L a transistores largos. No son valores extraídos a los anchos y temperatura de las pruebas.
 
-![NMOS_Ids_Vgs](https://github.com/DJosueMM/inversor_minimo_XH018/assets/125601912/2201089d-fc23-433e-aa93-48ea43aab2c2)
+| Parámetro | NMOS | PMOS |
+|---|---:|---:|
+| K'L (microamperios/V2) | 256 | 52 |
+| Magnitud VT (V) | 0.58 | 0.65 |
+| ION/W a VG=VD=1.8 V (microamperios/micrometro) | 475 | 170 |
+| Cox (fF/micrometro2) | 8.46 | 8.91 |
+| Cov (fF/micrometro) | 0.33 | 0.32 |
 
+En el objetivo VM=0.9 V, los sobrevoltajes son 0.32 V y 0.25 V. Ambos transistores cumplen VD mayor que el sobrevoltaje en el criterio de saturación de canal largo; eso no demuestra saturación de velocidad. [3] advierte que puede haber saturación de velocidad, especialmente en NMOS mínimo.
 
-Para determinar la resistencia mediante la ecuación (1) se utilizó la gráfica de la función de transferencia de NMOS, con esta se aproximo el valor de $I_{sat}$ y se realizó el cálculo que se presenta a continuación. 
+Se implementa un modelo gradual con limitación de velocidad en [first_order_model.py](scripts_py/first_order_model.py). Para magnitudes de tensión, \(u=\max(V_G-|V_T|,0)\), \(a=E_cL>0\), \(g=K'_L/L\):
 
-$$R_{eff} =\frac{3In(2)}{4} \frac{1.8V} {213.7 \micro A} \approx 4.4 k\ohm$$
+$$V_{D,sat}=a\left(\sqrt{1+\frac{2u}{a}}-1\right),\quad d=\min(V_D,V_{D,sat})$$
+$$j(V_G,V_D)=\frac{I}{W}=g\frac{ud-d^2/2}{1+d/a}$$
 
-Con ayuda de la gráfica de la curva característica del transistor NMOS se extrajeron los datos de $I_H$ e $I_L$, estos dieron como resultado $199 \micro A$ y $29.07 \micro A$ respectivamente, una vez obtenidos los datos se procedió a resolver la ecuación (2), el resultado se presenta a continuación. 
+En corte la corriente es cero. En región lineal d=VD y en saturación se limita d al punto donde la derivada de corriente se anula. Para a grande se recupera el modelo cuadrático; para campos altos se limita la corriente. Se omiten subumbral, DIBL, modulación de longitud, efecto de cuerpo y variaciones de movilidad con campo vertical.
 
-$$R_{eff} =  \frac{1.8V}{199 \micro A  + 29.07 \micro A}  \approx 7.9 k\ohm $$  
+Como no se dispone de Ec medido, a se infiere del ION tabulado, sin ajustar a la VTC SPICE:
 
-Con los valores obtenido anteriormente se determinó la resistencia unitaria para un transistor NMOS, el cual se obtuvo el siguiente resultado. 
-$$R_{nueff} = \frac{7.9 k\ohm} {{0.36 \micro m}} \approx 22 k\ohm/\micro m$$
+$$d_{ON}=\sqrt{2j_{ON}/g},\qquad
+a=\frac{d_{ON}^2}{2(V_{DD}-|V_T|-d_{ON})}$$
 
+Resulta \(a_n=0.82935\) V y \(a_p=9.03392\) V. Son parámetros equivalentes, no mediciones del campo crítico. El PMOS queda cercano al régimen cuadrático; no es justificable asumir que ambos transistores son lineales con sobrevoltaje a partir solo de su longitud mínima.
 
-### Cáculos para transistor PMOS
-A continuación se presentan los cálculo con la ecuación (1).
-$$R_{eff} = \frac{3In(2)}{4} \frac{1.8V}{170 \times 10^{-6} A/{\micro m} \cdot 0.72{\micro m}} \approx 7.7 k\ohm $$ 
+La VTC se obtiene imponiendo:
 
-Ahora con la ecuación (2).
-$$R_{eff} = \frac{1.8V} {(170 \times 10^{-6} A/{\micro m}) \cdot 0.72{\micro m}} \approx 14.7 k\ohm$$
-\
-El deck de prueba usa el valor por defecto `P=8` y una escala de 90 nm, por lo que el ancho PMOS es 0.72 µm. Para determinar la resistencia unitaria de ese transistor:
-$$R_{pueff} = \frac{1.8V} {(170 \times 10^{-6} A/{\micro m})} \approx 10.6 k\ohm * {\micro m}$$
+$$W_Nj_n(V_{in},V_{out})=
+W_Pj_p(V_{DD}-V_{in},V_{DD}-V_{out})$$
 
-### Análisis empírico
-Una manera muy parecida se realizó para determinarlo los valores de resistencia de PMOS pero en este caso se uso el deck `pmos_test.sp`, para posteriomente realizar el mismo procedimiento que el nmos, a continuación se presenta las gráficas y los cálculos realizados. 
+Para VM=0.9 V se predice P/N=6.10085, WP=2.19631 micrometros. La predicción no coincide con SPICE y no se usa como tamaño final. La estimación inicial lineal daba 3.37, pero era otra hipótesis y no una VTC por regiones validada. Se documenta el desacuerdo en lugar de escoger únicamente la aproximación más cercana.
 
-![PMOS_Ids_Vds](https://github.com/DJosueMM/inversor_minimo_XH018/assets/125601912/1cccd635-e6b7-4593-b39b-c3e37863f585)
+### Contraste con SPICE y corriente DC aislada
 
-![PMOS_Ids_Vgs](https://github.com/DJosueMM/inversor_minimo_XH018/assets/125601912/81328b36-2d41-40da-9319-c40e7a9983ee)
+Fuente: [resultados de la nueva ejecución](spice_decks/resultados_caracterizacion_20261116_231335_H9qsFY). Se midieron 101 ratios entre 1.5 y 4 con paso 0.025, y 901 puntos de entrada de 0 a 1.8 V cada 2 mV. No hubo errores, advertencias ni medidas fallidas en esta ronda.
 
-Primero se presenta los cálculos con la ecuación (1).
-$$R_{eff} =\frac{3In(2)}{4} \frac{1.8V} {180.5 \micro A} \approx 5.2 k\ohm$$
+El mejor centrado muestreado ocurre en P/N=3.125, WP=1.125 micrometros, VM=0.900232 V. El error respecto a VDD/2 es 0.232 mV. VM se mide en el cruce Vin=Vout, no solo donde Vout=0.9 V.
 
-Ahora con la ecuación (2) donde con ayuda de la gráfica se determinó que $I_H=102\micro A$ e $I_L=13.01\micro A$.
+| P/N | VM analítico (V) | VM SPICE (V) | Error analítico menos SPICE (mV) | RMSE Vout en toda la VTC (V) |
+|---|---:|---:|---:|---:|
+| 3.125 | 0.849256 | 0.900232 | -50.976 | 0.23805 |
+| 2.425 | 0.830066 | 0.882846 | -52.779 | 0.23982 |
+| 3.375 | 0.855113 | 0.905662 | -50.549 | 0.23673 |
 
-$$R_{eff} =  \frac{1.8V}{102 \micro A + 13.01 \micro A}  \approx 15.65 k\ohm $$  
+![VTC analítica y SPICE del diseño DC](Imagenes/modelo_vtc_3.125.svg)
 
-Para determinar la resistencia unitaria de un transistor PMOS para el proceso XT018 - 0.18 µm se realiza de la siguiente forma.
-$$R_{pueff} = \frac{15.65 k\ohm} {{0.72 \micro m}} \approx 21.74 k\ohm/\micro m$$
-\
-\
-Al comparar los datos obtenidos con los valores teóricos, se aprecian diferencias de alrededor de $4 k\ohm$ máximo. Esto se debe a que el analísis teórico realizado se cálculo con valor de $W/L= (10/0.18) \micro m/\micro m$, ya que el parámetros porporcionados para la tecnología XT018 mostraban ese valor, lo cual implica un gran impacto en los valores debido a que no se considera el valor mínimo de ancho necesario para esta tecngología que es $0.36 \micro m$. Por lo que, al tenes este parámetro diferente al requerido, se puede considerar que los valores teóricos generados tiene una pequeña discrepancia con respecto a los datos experimentales.  
+El modelo analítico sin modulación de longitud tiene una transición abrupta; no se añade una pendiente empírica para disimularlo. El RMSE incluye el desplazamiento de esa transición. La discrepancia puede originarse en parámetros de canal largo, umbrales de otra anchura/polarización, temperatura no corregida y transporte no representado por el modelo. Conocer ION a alimentación completa no determina las corrientes cerca del umbral. Las capacitancias no explican el desplazamiento de una VTC estática.
 
-Tambien se comprueba que la resistencia efectiva del PMOS es aproximadamente 2 veces la del NMOS.
+La alimentación del inversor bajo prueba está separada de la carga. Se mide el pico DC como \(\max[-I(VDRV)]\), incluyendo la pequeña fuga propia, no la corriente de la carga. Para P/N=3.125 resulta **26.5702 microamperios**. No es el pico de alimentación transitorio con contribución capacitiva. Se descarta la antigua medida llamada Isc que no solicitaba ninguna corriente.
 
-> **Pendiente para completar 2.a:** la consigna solicita extraer la resistencia promedio durante la descarga de un capacitor suficientemente grande en el intervalo \(V_{DD}\) a \(V_{DD}/2\). Las curvas I-V y estimaciones de esta sección son caracterización complementaria y no sustituyen ese procedimiento.
+![Pico DC aislado](Imagenes/caracterizacion_isc.svg)
 
-### Estimación preliminar de capacitancia de compuerta y constante RC (insumo para Parte 2.b)
-Los valores para los siguientes cáculos se tomaron de los parámetros para transistores 1.8V (ne,pe) de un proceso XT018 - 0.18 µm.
+## 1.b. Retardo con carga de un inversor idéntico
 
-#### Fórmula de la capacitancia parásita si se considera pesimista 
-$$C_{gs} = W_{dib} L_{dib}C_{ox} +  W_{dib}  C_{ov}  \quad(3)$$
+### Predicción independiente
 
-#### Fórmula de la constante RC ($\tau$) 
-$$\tau = 3R_{n}C  \quad(4)$$
+La carga FO1 es otro inversor del mismo tamaño. Para capacitancias se adopta el modelo pesimista de primer orden de [3]:
 
-$$\tau = (3/2) R_{p}C  \quad(5)$$
+$$C_g=WL C_{ox}+W C_{ov},\qquad C_{db}\approx C_{gs}$$
+$$C_{gn}=0.667008\ {\rm fF},\qquad C_{gp}(r)=0.692568r\ {\rm fF}$$
+$$C_L=C_{gn}+C_{gp}+C_{db,n}+C_{db,p}=A+Br$$
 
-### Transistor NMOS
-#### Cálculo de la capacitancia 
-A continuación se presentan los cálculo con la ecuación (3).
-$$C_{gn} = 0.36\micro m \cdot 0.18\micro m \cdot 8.46 fF/\micro{m}^{2} +  0.36\micro m \cdot 0.33 fF/\micro m $$
-$$C_{gn} \approx 0.67 fF$$
+Con r=WP/WN, A=1.334016 fF y B=1.385136 fF. No se suman esos capacitores a SPICE, que ya contiene capacitancias internas. Esta aproximación de difusión no equivale a extraer parámetros de unión BSIM.
 
-#### Cálculo de la constante RC ($\tau$)
-Para determinar la constante RC para el transistor NMOS se utlizó la ecuación (4), el desarollo de la misma se presenta a continuación.
-$$\tau = 3 \cdot 10.6 k\ohm \cdot 0.67 fF = 21.31 ps$$
+Para una entrada ideal que activa completamente el transistor, se integra el modelo de corriente entre VD=1.8 y 0.9 V:
 
+$$t_{1/2}=C_L\int_{V_{DD}/2}^{V_{DD}}\frac{dV}{I(V)},\qquad
+R_{eff,modelo}=\frac{1}{\ln 2}\int_{V_{DD}/2}^{V_{DD}}\frac{dV}{I(V)}$$
 
-### Transistor PMOS
-#### Cálculo de la capacitancia 
-A continuación se presentan los cálculo con la ecuación (3).
-$$C_{gp} = 0.72\micro m \cdot 0.18\micro m \cdot 8.91 fF/\micro{m}^{2} +  0.72\micro m \cdot 0.32 fF/\micro m $$
-$$C_{gp} \approx 1.39 fF$$
+Simpson con 1000 subintervalos da, a W=0.36 micrometros, Rn0=7.59313 kOhm y Rp0=21.25490 kOhm. No se usan retardos SPICE en esta predicción:
 
-#### Cálculo de la constante RC ($\tau$)
-Para determinar la constante RC para el transistor PMOS se utlizó la ecuación (5), el desarollo de la misma se presenta a continuación.
-$$\tau = 3/2 \cdot 14.7 k\ohm \cdot 1.39fF = 30.64 ps$$
+$$t_{HL}(r)=\ln2\,R_{n0}(A+Br),\quad
+t_{LH}(r)=\ln2\,\frac{R_{p0}}r(A+Br)$$
+$$t_{pd}(r)=\frac{\ln2}{2}(A+Br)(R_{n0}+R_{p0}/r)$$
 
-> **Pendiente para completar 2.b:** incluir capacitancias de difusión, extracción de resistencias desde retardos SPICE y la iteración indicada en la consigna usando primero \(W_P/W_N=2\) y luego la relación obtenida. Los valores anteriores son estimaciones preliminares de capacitancia de compuerta.
+Sin restricción, derivar tpd da \(r_{min}=\sqrt{AR_{p0}/(BR_{n0})}\). Bajo la restricción de igualdad de retardos se exige \(r_{sym}=R_{p0}/R_{n0}=2.79923\). Con WN fijo hay un único r factible en este modelo; no es el mínimo libre de tpd.
 
+| P/N | tpHL modelo (ps) | tpLH modelo (ps) | tpHL SPICE (ps) | tpLH SPICE (ps) |
+|---|---:|---:|---:|---:|
+| 2.425 | 24.6998 | 28.5115 | 23.4876 | 23.5374 |
+| 3.125 | 29.8030 | 26.6961 | 27.7825 | 22.6371 |
+| 2.79923 | 27.4280 | 27.4280 | No simulado exactamente | No simulado exactamente |
 
-## Parte 1. Diseño y caracterización del inversor CMOS mínimo
-### Parte 1.a. Dimensionamiento y VTC del inversor
+SPICE a r=2.8 da 25.8240 y 23.0078 ps, sin simetría. Las diferencias respecto al modelo pueden incluir transporte no lineal, capacitancias dependientes de tensión y de la transición, efectos de anchura y flancos de entrada finitos. La corriente de equilibrio DC no se usa para representar un flanco; se retira la antigua predicción de 83 ps basada en esa sustitución.
 
-#### Inversor de tamaño mínimo 
+### Ajuste SPICE y comparación de ambos diseños
 
-Se diseñó a nivel de esquemático el inversor que se muestra en la siguiente figura:
+Se usan flancos de entrada de 1 ps y el segundo ciclo. La asimetría se define como \(100|t_{LH}-t_{HL}|/t_{pd}\).
 
-![Esquemático del inversor](https://github.com/DJosueMM/inversor_minimo_XH018/blob/main/Imagenes/sch_inversor.png)
+| Diseño | P/N | WP (micrometros) | VM (V) | Pico DC (microamperios) | tpHL (ps) | tpLH (ps) | tpd (ps) | Asimetría (%) |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| Inicial | 2.000 | 0.720 | 0.870233 | 22.1810 | 20.7808 | 24.3265 | 22.5537 | 15.721 |
+| Mejor simetría temporal muestreada | 2.425 | 0.873 | 0.882846 | 23.9902 | 23.4876 | 23.5374 | 23.5125 | 0.212 |
+| Mejor centrado DC muestreado | 3.125 | 1.125 | 0.900232 | 26.5702 | 27.7825 | 22.6371 | 25.2098 | 20.410 |
 
-Este cuenta con un NMOS de tamaño mínimo permitido por las reglas escalables con contactos en las difusiones para la tecnología utilizada. Teniendo un valor de lambda de 90 nm, la expresión del transistor mínimo 4/2 lambda resulta en un ancho de NMOS de 360 nm.
+El ajuste dinámico reduce el ratio aproximadamente 13.4% respecto al r analítico 2.79923. La diferencia de retardos es 0.04982 ps en la malla, no una prueba de igualdad exacta ni de óptimo continuo. P/N=2 tiene menor retardo promedio pero no satisface simetría.
 
-Se busca centrar el punto de conmutación imponiendo \(V_{in}=V_{out}=V_{DD}/2\). Esto no garantiza por sí solo márgenes de ruido iguales ni requiere necesariamente \(\beta_p/\beta_n=1\): también influyen los umbrales y el modelo de corriente. Se diseñó el deck de HSPICE `inverter_transfer.sp` para obtener las funciones de transferencia de diferentes relaciones de anchos P/N:
+Respecto al diseño centrado DC, el temporal reduce tpd aproximadamente 6.7% y pico DC aproximadamente 9.7%, a costa de desplazar VM. Sus tiempos 20-80% son tfall=24.1922 ps y trise=29.2776 ps: igualdad de retardo de propagación no implica igualdad de tiempo de transición.
 
-![Función de transferencia del inversor](https://github.com/DJosueMM/inversor_minimo_XH018/blob/main/Imagenes/tf_inv_ra.png)
+![VTC de los diseños](Imagenes/caracterizacion_vtc.svg)
+![Retardos del barrido](Imagenes/caracterizacion_retardos.svg)
+![Segundo ciclo del diseño DC](Imagenes/transitorio_3.125.svg)
+![Segundo ciclo del diseño temporal](Imagenes/transitorio_2.425.svg)
 
-#### Dimensionamiento analítico de primer orden
+Las ondas se extrajeron del `.tr0`, no se reconstruyeron como exponenciales. Se verificaron los cruces de 0.9 V para los 101 ratios contra las medidas: diferencia máxima inferior a 0.000002 ps. Se muestran las sobreoscilaciones sin recortarlas; no se atribuyen a inductancias físicas ausentes del deck. Los extremos de la ventana gráfica se interpolan linealmente entre muestras almacenadas para conservar el nivel previo al flanco.
 
-Se fija \(V_{DD}=1.8\,\mathrm{V}\), \(V_M=V_{DD}/2=0.9\,\mathrm{V}\), \(W_N=0.36\,\mu\mathrm{m}\) y \(L=0.18\,\mu\mathrm{m}\). Para el punto \(V_{in}=V_{out}=V_M\), las magnitudes de las tensiones de sobreexcitación son:
+## 2.a. Resistencia efectiva por descarga de capacitor
 
-$$V_{OV,n}=V_M-V_{TN}=0.9-0.58=0.32\,\mathrm{V}$$
-$$V_{OV,p}=V_{DD}-V_M-|V_{TP}|=0.9-0.65=0.25\,\mathrm{V}$$
+Se prueban NMOS y PMOS con W/L=0.36/0.18 micrometros. El NMOS descarga un capacitor inicialmente a 1.8 V; el PMOS carga un capacitor desde cero, de modo que VSD cae de 1.8 a 0.9 V. Ambas puertas quedan completamente activadas.
 
-Los valores de umbral se toman de la fila de canal mínimo \(W/L=10/0.18\) del documento de parámetros de primer orden [4]. Para ambos transistores, \(V_{DS}=V_{SD}=0.9\,\mathrm{V}\), mayor que sus respectivos sobrevoltajes. Esto satisface la condición de saturación del modelo de canal largo en el punto de conmutación, aunque no prueba por sí solo que el transistor esté en saturación de velocidad.
+$$R_n(t)=V(dn)/I(VSN),\qquad
+R_p(t)=[V_{DD}-V(dp)]/[-I(VSP)]$$
 
-Como el canal dibujado es mínimo (\(L=0.18\,\mu\mathrm{m}\)), no se adopta el modelo cuadrático de canal largo como predicción principal: el documento [4] advierte que es probable la saturación de velocidad, al menos en NMOS, y que \(K'_L\) está medido en la región lineal para transistores largos. Se usa, por tanto, una aproximación de corriente limitada por velocidad, lineal con el sobrevoltaje:
+Se promedia aritméticamente V/I en el intervalo de tensión de canal [0.9,1.8] V, con muestras uniformes cada 10 ps. Se excluye t=0 porque UIC imprime corriente cero. Es una media uniforme en tiempo, no en voltaje; no se extrapolan los extremos.
 
-$$\frac{I_D}{W}\approx \frac{I_{ON}}{V_{DD}-V_T}V_{OV}$$
+| C | Muestras NMOS | Rn promedio (kOhm) | Muestras PMOS | Rp promedio (kOhm) | Rn por tiempo medio (kOhm) | Rp por tiempo medio (kOhm) |
+|---|---:|---:|---:|---:|---:|---:|
+| 1 pF | 439 | 6.45319 | 833 | 12.33541 | 6.34709 | 12.02375 |
+| 2 pF | 870 | 6.44970 | 1663 | 12.32330 | 6.27740 | 11.99938 |
 
-Esta extrapolación usa \(I_{ON}\) por unidad de ancho medido a \(V_{GS}=V_{DS}=1.8\,\mathrm{V}\); no es un modelo BSIM ni una medida a \(V_M\). Con \(I_{ON,n}=475\,\mu\mathrm{A}/\mu\mathrm{m}\) e \(I_{ON,p}=170\,\mu\mathrm{A}/\mu\mathrm{m}\):
+Al duplicar C, el promedio cambia 0.054% en NMOS y 0.098% en PMOS, respaldando estabilidad frente al capacitor y predominio de carga externa. No separa todos los errores de integración/inicialización. Se adopta 2 pF: Rn=6.44970 kOhm, Rp=12.32330 kOhm; relación a igual ancho 1.91068.
 
-$$\left.\frac{I_n}{W_n}\right|_{V_M}\approx475\frac{0.32}{1.8-0.58}=124.6\,\mu\mathrm{A}/\mu\mathrm{m}$$
-$$\left.\frac{|I_p|}{W_p}\right|_{V_M}\approx170\frac{0.25}{1.8-0.65}=37.0\,\mu\mathrm{A}/\mu\mathrm{m}$$
+Las resistencias por tiempo medio se calculan como \(t_{1/2}/[\ln(2)C]\). Tienen otra ponderación y no sustituyen el promedio solicitado de V/I. Las corrientes de fuente también contienen contribuciones internas cuya importancia relativa disminuye con C externa grande.
 
-Imponiendo \(I_n=|I_p|\) en \(V_M\), se obtiene:
+![Resistencias instantáneas y comparación de capacitores](Imagenes/caracterizacion_resistencias.svg)
 
-$$\frac{W_p}{W_n}\approx\frac{(I_n/W_n)}{(|I_p|/W_p)}=\frac{124.6}{37.0}=3.37$$
-$$W_p\approx3.37(0.36\,\mu\mathrm{m})=1.21\,\mu\mathrm{m}\approx13.5\lambda$$
+## 2.b. Extracción desde retardo y parásitas
 
-Como contraste, el modelo cuadrático de canal largo daría \(W_p/W_n=(K'_n/K'_p)(V_{OV,n}/V_{OV,p})^2=(256/52)(0.32/0.25)^2\approx8.07\), o \(W_p\approx2.91\,\mu\mathrm{m}\). Se reporta solo como comparación: \(K'_L\) corresponde a la región lineal y los valores son de canal largo, por lo que su uso con \(L=0.18\,\mu\mathrm{m}\) no representa bien el régimen probable del NMOS mínimo.
+Usando CL calculada manualmente:
 
-La barrida discreta de VTC reporta una relación aproximada de 3.1:1. Es cercana a la estimación de primer orden 3.37:1 (diferencia aproximada del 9% respecto a 3.1), lo cual es razonable dada la extrapolación de \(I_{ON}\), la cuantización de la barrida y los efectos de canal corto/parásitos no incluidos. La simulación es la que debe determinar el valor final.
+$$R_{n,ret}=t_{HL}/[\ln(2)C_L],\qquad
+R_{p,ret}(W_P)=t_{LH}/[\ln(2)C_L]$$
 
-La corriente de cortocircuito existe cuando ambos transistores conducen; su máximo debe buscarse en el barrido, no suponerse en \(V_{out}=V_{DD}/2\). La siguiente figura historica no se considera una medición válida de corriente:
+Se refiere el PMOS a W=0.36 micrometros mediante \(R_{p,ret}(0.36)\approx rR_{p,ret}(W_P)\). Se empieza con r=2, se recalcula CL y se propone \(r_{nuevo}=R_{p,ret}(0.36)/R_{n,ret}\), eligiendo el punto de malla más próximo.
 
-![Corriente de cortocircuito](https://github.com/DJosueMM/inversor_minimo_XH018/blob/main/Imagenes/FO4_opt_isc.png)
+| Paso | r | CL (fF) | Rn (kOhm) | Rp referido a 0.36 micrometros (kOhm) | r propuesto | Siguiente r |
+|---|---:|---:|---:|---:|---:|---:|
+| 0 | 2.000 | 4.104288 | 7.30465 | 17.10199 | 2.34125 | 2.350 |
+| 1 | 2.350 | 4.589086 | 7.23544 | 17.47951 | 2.41582 | 2.425 |
+| 2 | 2.425 | 4.692971 | 7.22047 | 17.54679 | 2.43014 | 2.425 |
 
-El archivo histórico reporta 0.8973 para P/N=3:1, pero la instrucción `.measure DC Isc when V(out)=0.9v` no solicita ninguna corriente: devuelve la coordenada del barrido de entrada donde se cumple la condición. El nombre `Isc` no transforma esa tensión en corriente. Se descarta su interpretación previa como amperios o miliamperios y se sustituirá la gráfica usando la corriente de alimentación aislada del inversor bajo prueba.
+La iteración converge en la malla y coincide con el menor desequilibrio medido. No es una predicción independiente: usa retardos SPICE y carga aproximada. El cociente de resistencias cancela la carga común; la convergencia del ratio no valida la exactitud absoluta de CL. El escalamiento inverso con ancho también es aproximado.
 
-> **Pendiente para completar 1.a:** superponer la curva de SPICE con la VTC del modelo analítico usando la relación calculada, explicar las diferencias observadas y medir el pico de corriente de la etapa bajo prueba con alimentación separada.
+## 2.c. Comparación de métodos
 
-Los análisis anteriores se realizaron para una esquina de variabilidad del proceso "tm typical medium", que representa el comportamiento neutral. No obstante, se pueden realizar análisis en otras esquinas de variabilidad donde se sesga el inversor, haciendo más rápido el PMOS o el NMOS. Se llevó a cabo este análisis en las siguientes esquinas:
+A igual tamaño r=2.425 y CL=4.692971 fF:
 
-- WP: worst case power; NMOS rápido y PMOS rápido
-- WS: worst case speed; NMOS lento y PMOS lento
-- WO: worst case one; NMOS rápido y PMOS lento
-- WZ: worst case zero; NMOS lento y PMOS rápido
+| Método | Rn (kOhm) | Rp referido a 0.36 micrometros (kOhm) | tpHL (ps) | tpLH (ps) |
+|---|---:|---:|---:|---:|
+| Descarga 2 pF y predicción RC | 6.44970 | 12.32330 | 20.98 | 16.53 |
+| Extracción desde FO1 con CL aproximada | 7.22047 | 17.54679 | 23.49 medido | 23.54 medido |
 
-Se simuló el inversor para cada esquina de variabilidad para obtener los tiempos de transición:
+Las resistencias por retardo exceden las de descarga aproximadamente 12.0% en NMOS y 42.4% en PMOS. Las diferencias incluyen posibles errores de CL, acoplamiento puerta-drenador, trayectoria de polarización, forma de entrada y escalamiento con ancho. No se atribuye toda la discrepancia a un único mecanismo.
 
-![inv_corners](https://github.com/DJosueMM/inversor_minimo_XH018/blob/main/Imagenes/transient_inv_esquinas.png)
+Para diseño manual de compuertas similares se prefiere la calibración por retardo porque refleja ese entorno; sus valores absolutos dependen de CL. La descarga es más directa para verificar V/I con carga dominante y supone menos sobre la capacitancia interna. Las pruebas duran 50 ns simulados frente a 3 ns para FO1, pero no se midió tiempo de CPU comparable: no se confunde duración simulada con costo computacional.
 
-De estos datos, se obtuvieron los respectivos tiempos de propagación de subida y de caída para cada esquina:
+## Reproducibilidad y trazabilidad
 
-![Esquinas de variabilidad](https://github.com/DJosueMM/inversor_minimo_XH018/blob/main/Imagenes/corners_const.png)
-
-
-### Análisis complementario: cadena FO4 y optimización de retardos
-
-#### FO4
-
-Se montó el FO4 que propone el libro [1], este se encuentra en `fo4_ratios.sp`. Con una ratio P/N de 2:1 se obtuvieron las señales en cada etapa del FO4:
-
-Se obtuvo un tpdr = 80.76 ps, un tpdf = 70.34 ps y un tpd = 75.55 ps.
-
-![fo4](https://github.com/DJosueMM/inversor_minimo_XH018/blob/main/Imagenes/FO4.png)
-
-Este análisis de una cadena FO4 es complementario; por sí solo no reemplaza el caso de la consigna 1.b, que considera un inversor manejando una carga similar a sí mismo.
-
-#### Estimación analítica con carga de un inversor idéntico
-
-Se interpreta “carga similar a sí mismo” como un inversor idéntico conectado a la salida. Se conserva \(W_N=0.36\,\mu\mathrm{m}\) y se dimensiona \(W_P\) para que los retardos de subida y bajada sean iguales. En el modelo RC de primer orden:
-
-$$t_{pHL}\approx0.69R_nC_L,\qquad t_{pLH}\approx0.69R_pC_L$$
-
-Si se aproxima la carga por una misma capacitancia constante para ambos flancos, la condición de simetría es \(R_{n,eff}=R_{p,eff}\). Estas resistencias describen la transición con entrada cerca de los rieles; no son las resistencias en el equilibrio DC con entrada de 0.9 V. Por tanto, el ratio 3.37 de 1.a no se puede presentar como solución dinámica sin otra extracción.
-
-Como punto de partida independiente para el barrido, igualar corrientes de encendido por ancho a entrada completamente activada da \(W_P/W_N\approx475/170=2.79\). Es solo una estimación inicial: las corrientes cambian durante la transición y la razón definitiva debe obtenerse de las resistencias efectivas y verificarse por simetría de retardos.
-
-Para estimar la carga se usa el modelo pesimista de capacitancias de [4], \(C_g=W_{dib}L_{dib}C_{ox}+W_{dib}C_{ov}\), y la aproximación del mismo documento \(C_{db}=C_{sb}=C_g\). Sin capacitancia de cableado:
-
-$$C_{g,n}=0.36(0.18)(8.46)+0.36(0.33)=0.667\,\mathrm{fF}$$
-$$C_{g,p}=1.21(0.18)(8.91)+1.21(0.32)\approx2.33\,\mathrm{fF}$$
-$$C_L\approx C_{g,n}+C_{g,p}+C_{db,n}+C_{db,p}\approx2(C_{g,n}+C_{g,p})=6.00\,\mathrm{fF}$$
-
-Las capacitancias anteriores corresponden al tamaño DC de 1.a. Se recalcularán para cada tamaño del PMOS durante la iteración de 2.b. Para un ratio \(r=W_P/W_N\), el modelo aproximado del documento da:
-
-$$C_L(r)\approx2[0.667008+0.36r(0.18\cdot8.91+0.32)]\,\mathrm{fF}$$
-
-**Corrección metodológica:** se retira la predicción anterior de 83 ps, obtenida usando corriente de equilibrio DC como corriente del flanco. Esa sustitución no representa las condiciones de entrada de la prueba temporal. Los nuevos retardos analíticos se calcularán con resistencias efectivas de transición; no se ajustarán artificialmente para coincidir con SPICE.
-
-#### Primera comprobación con el tamaño DC
-
-Los archivos de `spice_decks/resultados_revision_20261116_213433` reportan, para el tamaño \(W_P=1.215\,\mu\mathrm{m}\), esquina `tm` y 70 grados Celsius:
-
-| Medida | Resultado |
-|---|---:|
-| Entrada para salida de 0.9 V (no cruce exacto Vin=Vout) | 0.9058 V |
-| Retardo alto a bajo | 30.11 ps |
-| Retardo bajo a alto | 23.47 ps |
-| Retardo promedio | 26.79 ps |
-
-La diferencia de retardos es aproximadamente 6.64 ps, o 24.8% del promedio: este tamaño no garantiza simetría dinámica. La entrada de esta primera prueba tiene flancos de 10 ps; el nuevo barrido usa flancos de 1 ps y mide el segundo ciclo, por lo que no se deben exigir números idénticos entre ambas pruebas.
-
-La medida DC de aproximadamente -49.77 microamperios corresponde a la alimentación conjunta de dos etapas. No se reporta como corriente exclusiva del inversor bajo prueba.
-
-Para facilitar esa comprobación se prepararon dos decks: `spice_decks/self_loaded_inverter_dc.sp` barre la entrada para obtener la VTC, el umbral medido y la corriente de alimentación en \(V_{out}=V_{DD}/2\); `spice_decks/self_loaded_inverter_tran.sp` mide \(tpHL\), \(tpLH\), \(tpd\), \(tfall\) y \(trise\) con entrada cuadrada. Ambos instancian dos inversores idénticos con \(N=4\), \(P=13.5\) y `scale=90n`, que corresponden a \(W_N=0.36\,\mu\mathrm{m}\) y \(W_P=1.215\,\mu\mathrm{m}\). Ejecutar desde `spice_decks` para que se resuelva el `.include 'min_inverter.sp'`. Las librerías se referencian desde `/mnt/vol_NFS_rh003/estudiantes/dmedina_cadence/vlsi/Hspice/lp5mos/` y deben estar disponibles en el entorno HSPICE.
-
-#### Optimización manual
-Para lograr tener la mínima diferencia entre los tiempos de propagación de subida y de bajada se modificó el deck para probar distintos ratios P/N automáticamente, este se encuentra en `fo4_ratios.sp`. Se obtuvieron las siguietes gráficas:
-
-Para los tiempos de propagación para los distintos ratios P/N:
-
-![tpd_ratios](https://github.com/DJosueMM/inversor_minimo_XH018/blob/main/Imagenes/FO4_opt_t.png)
-
-De este barrido de parámetros, se concluye que el ratio P/N óptimo es de 3.4 : 1, obteniendo una diferencia de 0.21 ps. En contraste, una relación 2:1 tiene una diferencia de 10.43 ps en los tiempos de propagación. A pesar de que la relación 2:1 no es simétrica, en promedio es más rápida que la relación en el punto optimizado. La relación 2:1 tiene un tiempo de propagación promedio de 75.55 ps mientras que la relación 3.4 : 1 tiene un tiempo de propagación promedio de 87.17 ps.
-
-Para la potencia promedio para los distintos ratios P/N:
-
-![pwr_ratios](https://github.com/DJosueMM/inversor_minimo_XH018/blob/main/Imagenes/FO4_opt_pwr.png)
-
-Analizando la potencia promedio, esta es directamente proporcional al ratio P/N. Para una relación 2:1 se tiene una potencia promedio de 4.94 mW meintras que para la relación en el punto de optimización se tienen 6.99 mW.
-
-#### Optimización de hspice
-
-Se realizó una optimización automática en hspice con el deck `fo4_opt.sp`. Se obtuvieron los siguientes datos:
-
-|  P/λ    | bestratio | tpdr     | tpdf     | tpd      | diff     | Temperatura|
-|---------|-----------|----------|----------|----------|----------|------------|
-| 13.2009 | 3.3002    | 86.52 ps | 85.11 ps | 85.81 ps | 1.41 ps  | 70.00 C    |
-
-El optimizador resultó en que el mejor ratio es de 3.3:1, con un ancho del PMOS de 13.2009 * 90nm. La diferencia entre \(tpdr\) y \(tpdf\), calculada a partir de los datos de la tabla, es de 1.41 ps.
-
-Tanto el proceso de optimización manual como el generado por hspice convergen a resultados aproximados. El realizado manualmente llega a un punto de mayor simetría en tiempos de propagación pero el PMOS llega a ser más rápido que el NMOS, en constraste, la optimización automática encontró el mejor punto de simetría pero donde el NMOS seguía siendo más rápido que el PMOS. En términos de potencia ambas optimizaciones disipan más que un ratio 2:1 y la relación 2:1 es más rápida al tener un tpd menor que ambas optimizaciones. Por último, en términos de área se puede ver que se llegan a anchos de hasta 13.2 veces λ lo que implica un gran área para la implementación física.
-
-Tomando todos estos parámetros en consideración, se puede concluir que valores cercanos a ratios de 2:1 y 3:1 pueden cumplir para distintos requisitos de diseño, ya sea en consumo de potencia, velocidad o simetría de las señales.
-
-> **Pendiente para completar 1.b:** seleccionar el ratio por simetría en el nuevo barrido, refinar alrededor del cruce de retardos, recalcular capacitancias y retardos analíticos, e incluir VTC y corriente DC aislada para comparar con 1.a.
-
-### Parte 2.b (continuación). Resultados preliminares de extracción de resistencia desde retardos
-
-Los siguientes valores se conservan como resultados preliminares; falta mostrar la memoria de cálculo y confirmar que corresponden al procedimiento de la consigna 2.b.
-
-En base a la siguiente ecuación se realizarán los cálculos de resistencia efectiva:
-$tpdr = \frac{3}{2} * R_{p} * C$
-
-|  Transistor    | Parametro | Valor (kΩ)     | 
-|----------------|-----------|----------------|
-| NMOS           | Rn        | 14.92          | 
-| PMOS           | Rp        | 27.82          | 
-
-### Parte 2.c. Comparación de métodos (pendiente)
-
-Comparar estos valores con los obtenidos por descarga de capacitor (2.a), documentar ambos métodos y justificar cuál es preferible para el diseño manual.
-
-## Nueva ronda de simulaciones para completar el informe
-
-Ejecutar en Linux, desde la raíz del proyecto:
+Desde la raíz del proyecto, en el servidor Linux:
 
 ```bash
 bash spice_decks/run_characterization.sh
 ```
 
-El script conserva cada ejecución en una carpeta nueva dentro de `spice_decks` y comprueba errores, medidas fallidas y fin normal de HSPICE. No ejecuta los decks históricos.
+Análisis local de la ejecución incluida, con Python estándar y sin paquetes externos:
 
-| Deck | Objetivo |
-|---|---|
-| `characterization_dc.sp` | VTC, cruce exacto Vin=Vout y pico de corriente DC del inversor bajo prueba, con alimentación separada de la carga. |
-| `characterization_tran.sp` | Barrido FO1 de P/N entre 1.5 y 4 con paso 0.025; incluye 2, 3.1 y 3.375. Mide retardos, diferencia y asimetría porcentual en segundo ciclo. |
-| `channel_discharge.sp` | Pruebas duales NMOS y PMOS mínimos de 0.36/0.18 micrometros con capacitores de 1 y 2 pF. |
+```bash
+python scripts_py/analyze_characterization.py spice_decks/resultados_caracterizacion_20261116_231335_H9qsFY
+python -m unittest discover -s scripts_py -p test_analyze_characterization.py -v
+```
 
-Los nuevos decks usan `characterization_common.inc`, que conserva las geometrías de difusión de la celda original pero expone las alimentaciones y usa el nodo de referencia 0. Todos usan esquina `tm` y temperatura de 70 grados Celsius. No se suman capacitores analíticos a la carga FO1: el modelo SPICE ya contiene capacitancias.
+Los decks [DC](spice_decks/characterization_dc.sp), [transitorio](spice_decks/characterization_tran.sp) y [descarga](spice_decks/channel_discharge.sp) comparten [geometrías y librerías](spice_decks/characterization_common.inc), con alimentación de carga aislada del inversor bajo prueba y nodo de referencia 0. Las librerías institucionales están en `/mnt/vol_NFS_rh003/estudiantes/dmedina_cadence/vlsi/Hspice/lp5mos/`.
 
-En la prueba de descarga, el capacitor NMOS comienza a 1.8 V y descarga; el capacitor PMOS comienza en 0 V y carga, de modo que su \(V_{SD}\) cae de 1.8 a 0.9 V. Se exportan tensiones y corrientes con `.print` y `.probe` para calcular:
+El [script de análisis](scripts_py/analyze_characterization.py) genera las figuras y las tablas de [comparación](spice_decks/resultados_caracterizacion_20261116_231335_H9qsFY/analisis/comparacion.csv), [descarga](spice_decks/resultados_caracterizacion_20261116_231335_H9qsFY/analisis/resistencias.csv), [iteración](spice_decks/resultados_caracterizacion_20261116_231335_H9qsFY/analisis/iteracion.csv), [error del modelo VTC](spice_decks/resultados_caracterizacion_20261116_231335_H9qsFY/analisis/modelo_vtc.csv) y [verificación de ondas](spice_decks/resultados_caracterizacion_20261116_231335_H9qsFY/analisis/verificacion_ondas.csv).
 
-$$R_n(t)=\frac{V(dn)}{I(VSN)},\qquad R_p(t)=\frac{V_{DD}-V(dp)}{-I(VSP)}$$
+El lector binario solo admite el formato 2013 little-endian y las columnas comprobadas de esta ejecución. Rechaza otros formatos, datos truncados y discrepancias de retardos mayores a 1 ps; la discrepancia real obtenida es muy inferior.
 
-El promedio solicitado se calculará solo en el intervalo donde cada tensión de canal esté entre \(V_{DD}\) y \(V_{DD}/2\), documentando el muestreo. Las medidas `rn_rc` y `rp_rc`, obtenidas como \(t_{1/2}/(\ln(2)C)\), son referencias RC adicionales y no sustituyen ese promedio. Comparar ambos valores de capacitor permitirá evaluar si las parásitas son despreciables.
+## Justificación del alcance de primer orden
 
-Conservar la carpeta de resultados completa, especialmente los `.lis`, `.ms0.csv`, `.mt0.csv` y las formas de onda. Las salidas impresas de los `.lis` permiten analizar las descargas sin depender de un lector de archivos binarios. Los nuevos decks quedan pendientes de validación sintáctica y numérica en el HSPICE del servidor.
+El objetivo es dimensionar con modelos manuales, comprobar mediante SPICE y explicar las diferencias, no reproducir internamente BSIM4. Se conserva el modelo aproximado de capacitancias de [3] y se declara dónde se utiliza. No se requiere reconstruir todas las correcciones geométricas y térmicas para realizar este contraste de primer orden.
 
-# Bibliografía
-[1] N. Weste and D. Harris, CMOS VLSI Design: A Circuits and Systems Perspective, 4 edition.
-Boston: Addison-Wesley, 2010.
-[2] J. Rabaey, A. Chandrakasan y B. Nikolic. Digital Integrated Circuits: A Design Perspective.
-[3] Process and Device Specification XH018 - 0.18 μm Modular Mixed Signal HV CMOS, PDS-018-
-13. Release 7.0.1. XFAB Semiconductor Foundries, Nov. 2017.
-[4] A. Chacón Rodríguez, *Parámetros de primer orden para tecnología XFAB 0.18 μm (Bulk CMOS XH018)*, material de curso, Instituto Tecnológico de Costa Rica, 2018.
+Como comprobación de los parámetros base, se consultaron en el servidor los modelos `ne`, `pe` y su esquina típica. Las capturas confirman BSIM4 4.7, espesores TOXE de 4.1 nm y 3.9 nm, y EPSROX=3.9. No se distribuyen los archivos del PDK.
+
+| Comprobación | NMOS | PMOS |
+|---|---:|---:|
+| Cox geométrico del modelo, aproximado (fF/micrometro2) | 8.42 | 8.85 |
+| Cox usado del material [3] (fF/micrometro2) | 8.46 | 8.91 |
+| Solape nominal CGSO=CGDO del modelo (fF/micrometro) | 0.2284 | 0.1674 |
+| Cov usado del material [3] (fF/micrometro) | 0.33 | 0.32 |
+
+Cox difiere menos de 1%, lo que respalda esa aproximación geométrica. Los coeficientes de solape no coinciden igual de bien y no representan por sí solos toda la capacitancia de entrada de BSIM. Por ello, no se afirma equivalencia entre todas las capacitancias ni se reemplazan coeficientes aislados sin recalcular el modelo completo de carga usado.
+
+El contraste dinámico independiente a r=2.425 predice 24.70/28.51 ps frente a 23.49/23.54 ps en SPICE: diferencias aproximadas de 5.2% y 21.1%, respectivamente. Es una aproximación útil pero de precisión desigual. El desplazamiento de unos 51 mV de la VTC analítica del diseño DC es una discrepancia relevante que debe reportarse, no describirse como coincidencia exacta.
+
+En síntesis, los modelos manuales orientan el dimensionamiento y muestran el orden de magnitud; SPICE permite ajustar la solución con un modelo más completo. Las discrepancias se cuantifican y se relacionan con los supuestos, sin exigir que el modelo manual reconstruya BSIM.
+
+## Alcance y límites de la entrega
+
+- Confirmar la correspondencia XH018/XT018 y los parámetros a los anchos/temperatura de prueba. La comparación analítica está realizada, pero muestra que no es válido afirmar dimensionamiento exacto con estos parámetros.
+- Las capacitancias de difusión se aproximan según [3]. Si se exige literalmente calcularlas desde parámetros del simulador, esa parte de 2.b sigue pendiente; no se declara cumplida únicamente por haber consultado el modelo.
+- Refinar la malla alrededor de r=2.425 solo si se desea afirmar mayor precisión; el resultado actual declara paso 0.025.
+- Contrastar la implementación analítica elegida con las expresiones específicas de [1] y la metodología de las secciones solicitadas de [2] antes de considerar plenamente satisfecho ese requisito bibliográfico.
+
+## Referencias
+
+[1] N. Weste y D. Harris, *CMOS VLSI Design: A Circuits and Systems Perspective*, 4a edición. Addison-Wesley, 2010.
+
+[2] J. Rabaey, A. Chandrakasan y B. Nikolic, *Digital Integrated Circuits: A Design Perspective*, 2a edición. Prentice Hall, 2005.
+
+[3] A. Chacón Rodríguez, *Parámetros de primer orden para tecnología XFAB 0.18 micrometros (Bulk CMOS XH018)*, material de curso, Instituto Tecnológico de Costa Rica, 2018. [Documento local](../Proyectos_proyecto1_XFAB_XH018_param_1er_orden.pdf).
