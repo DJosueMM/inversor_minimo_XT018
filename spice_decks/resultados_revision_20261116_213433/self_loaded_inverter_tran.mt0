@@ -1,0 +1,6 @@
+$DATA1 SOURCE='PrimeSim HSPICE' VERSION='U-2023.03-SP2 linux6' PARAM_COUNT=0
+.TITLE '* respuesta transitoria del inversor cargado por otro inversor identico.'
+ tphl             tplh             tpd              tfall           
+ trise            temper           alter#          
+  3.011e-11        2.347e-11        2.679e-11        3.002e-11      
+  2.759e-11         70.0000        1               

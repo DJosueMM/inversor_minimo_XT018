@@ -1,0 +1,3 @@
+Using: /mnt/vol_synopsys2023/synopsys/hspice/U-2023.03-SP2/hspice/linux64/hspice  -i 'fo4.sp' -o 'resultados_revision_20261116_213433/fo4'
+
+>info:         ***** hspice job concluded

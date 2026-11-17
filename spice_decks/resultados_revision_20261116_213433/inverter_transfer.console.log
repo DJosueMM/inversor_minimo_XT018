@@ -1,0 +1,3 @@
+Using: /mnt/vol_synopsys2023/synopsys/hspice/U-2023.03-SP2/hspice/linux64/hspice  -i 'inverter_transfer.sp' -o 'resultados_revision_20261116_213433/inverter_transfer'
+
+>info:         ***** hspice job concluded
