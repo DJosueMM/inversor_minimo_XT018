@@ -126,7 +126,7 @@ Se diseñó a nivel de esquemático el inversor que se muestra en la siguiente f
 
 Este cuenta con un NMOS de tamaño mínimo permitido por las reglas escalables con contactos en las difusiones para la tecnología utilizada. Teniendo un valor de lambda de 90 nm, la expresión del transistor mínimo 4/2 lambda resulta en un ancho de NMOS de 360 nm.
 
-Para obtener un inversor sin sesgo con márgenes de ruido totalmente simétricos, se debe cumplir que al tener VDD/2 en la entrada, su salida sea también VDD/2. Esto implica que los parámetros Beta tendrán una relación Bp/Bn = 1. Para lograr esto, se diseñó el deck de HSPICE `inverter_transfer.sp`, donde se obtienen las funciones de transferencia para diferentes relaciones de anchos de transistor P/N. Al simular estos datos, se obtuvo la siguiente gráfica:
+Se busca centrar el punto de conmutación imponiendo \(V_{in}=V_{out}=V_{DD}/2\). Esto no garantiza por sí solo márgenes de ruido iguales ni requiere necesariamente \(\beta_p/\beta_n=1\): también influyen los umbrales y el modelo de corriente. Se diseñó el deck de HSPICE `inverter_transfer.sp` para obtener las funciones de transferencia de diferentes relaciones de anchos P/N:
 
 ![Función de transferencia del inversor](https://github.com/DJosueMM/inversor_minimo_XH018/blob/main/Imagenes/tf_inv_ra.png)
 
@@ -157,13 +157,13 @@ Como contraste, el modelo cuadrático de canal largo daría \(W_p/W_n=(K'_n/K'_p
 
 La barrida discreta de VTC reporta una relación aproximada de 3.1:1. Es cercana a la estimación de primer orden 3.37:1 (diferencia aproximada del 9% respecto a 3.1), lo cual es razonable dada la extrapolación de \(I_{ON}\), la cuantización de la barrida y los efectos de canal corto/parásitos no incluidos. La simulación es la que debe determinar el valor final.
 
-En cuanto a la corriente de cortocircuito, que ocurre cuando ambos transistores están encendidos en el punto donde Vout = VDD/2, se obtuvo la siguiente gráfica de corriente de cortocircuito en función de la relación P/N:
+La corriente de cortocircuito existe cuando ambos transistores conducen; su máximo debe buscarse en el barrido, no suponerse en \(V_{out}=V_{DD}/2\). La siguiente figura historica no se considera una medición válida de corriente:
 
 ![Corriente de cortocircuito](https://github.com/DJosueMM/inversor_minimo_XH018/blob/main/Imagenes/FO4_opt_isc.png)
 
-El archivo de datos reporta un valor de 0.8973 para una relación P/N de 3:1. La unidad de ese valor debe verificarse contra la configuración/exportación de HSPICE antes de reportarla; no se afirma aquí que sean amperios.
+El archivo histórico reporta 0.8973 para P/N=3:1, pero la instrucción `.measure DC Isc when V(out)=0.9v` no solicita ninguna corriente: devuelve la coordenada del barrido de entrada donde se cumple la condición. El nombre `Isc` no transforma esa tensión en corriente. Se descarta su interpretación previa como amperios o miliamperios y se sustituirá la gráfica usando la corriente de alimentación aislada del inversor bajo prueba.
 
-> **Pendiente para completar 1.a:** superponer la curva de SPICE con la VTC del modelo analítico usando la relación calculada, explicar las diferencias observadas y confirmar en el resultado de HSPICE la unidad de la corriente de cortocircuito.
+> **Pendiente para completar 1.a:** superponer la curva de SPICE con la VTC del modelo analítico usando la relación calculada, explicar las diferencias observadas y medir el pico de corriente de la etapa bajo prueba con alimentación separada.
 
 Los análisis anteriores se realizaron para una esquina de variabilidad del proceso "tm typical medium", que representa el comportamiento neutral. No obstante, se pueden realizar análisis en otras esquinas de variabilidad donde se sesga el inversor, haciendo más rápido el PMOS o el NMOS. Se llevó a cabo este análisis en las siguientes esquinas:
 
@@ -199,7 +199,9 @@ Se interpreta “carga similar a sí mismo” como un inversor idéntico conecta
 
 $$t_{pHL}\approx0.69R_nC_L,\qquad t_{pLH}\approx0.69R_pC_L$$
 
-Ambas transiciones ven la misma capacitancia de carga, por lo que la condición de simetría es \(R_n=R_p\), equivalente a igualar las corrientes de NMOS y PMOS en el punto de conmutación. Con la aproximación de saturación de velocidad adoptada en 1.a resulta \(W_P/W_N\approx3.37\), \(W_P\approx1.21\,\mu\mathrm{m}\). Bajo la restricción de retardos iguales y con \(W_N\) fijado al mínimo, esta relación fija el tamaño de PMOS y, por tanto, el retardo estimado.
+Si se aproxima la carga por una misma capacitancia constante para ambos flancos, la condición de simetría es \(R_{n,eff}=R_{p,eff}\). Estas resistencias describen la transición con entrada cerca de los rieles; no son las resistencias en el equilibrio DC con entrada de 0.9 V. Por tanto, el ratio 3.37 de 1.a no se puede presentar como solución dinámica sin otra extracción.
+
+Como punto de partida independiente para el barrido, igualar corrientes de encendido por ancho a entrada completamente activada da \(W_P/W_N\approx475/170=2.79\). Es solo una estimación inicial: las corrientes cambian durante la transición y la razón definitiva debe obtenerse de las resistencias efectivas y verificarse por simetría de retardos.
 
 Para estimar la carga se usa el modelo pesimista de capacitancias de [4], \(C_g=W_{dib}L_{dib}C_{ox}+W_{dib}C_{ov}\), y la aproximación del mismo documento \(C_{db}=C_{sb}=C_g\). Sin capacitancia de cableado:
 
@@ -207,11 +209,26 @@ $$C_{g,n}=0.36(0.18)(8.46)+0.36(0.33)=0.667\,\mathrm{fF}$$
 $$C_{g,p}=1.21(0.18)(8.91)+1.21(0.32)\approx2.33\,\mathrm{fF}$$
 $$C_L\approx C_{g,n}+C_{g,p}+C_{db,n}+C_{db,p}\approx2(C_{g,n}+C_{g,p})=6.00\,\mathrm{fF}$$
 
-Con el modelo lineal de corriente por ancho usado en 1.a, ambos transistores entregan en \(V_M\) aproximadamente \(I=44.9\,\mu\mathrm{A}\). La resistencia equivalente en ese punto es \(R\approx0.9\,\mathrm{V}/44.9\,\mu\mathrm{A}=20.1\,\mathrm{k}\Omega\), de donde:
+Las capacitancias anteriores corresponden al tamaño DC de 1.a. Se recalcularán para cada tamaño del PMOS durante la iteración de 2.b. Para un ratio \(r=W_P/W_N\), el modelo aproximado del documento da:
 
-$$t_{pHL}\approx t_{pLH}\approx0.69(20.1\,\mathrm{k}\Omega)(6.00\,\mathrm{fF})\approx83\,\mathrm{ps}$$
+$$C_L(r)\approx2[0.667008+0.36r(0.18\cdot8.91+0.32)]\,\mathrm{fF}$$
 
-Este retardo es una estimación RC de primer orden, no un resultado de simulación. Asume que el valor de corriente en el punto de conmutación representa la resistencia efectiva del flanco, y que las capacitancias de difusión pueden aproximarse por las de compuerta según [4]; no incluye cableado, variación de capacitancia con tensión ni formas no lineales de corriente. Por ello, se espera que el retardo SPICE difiera. La consigna requiere validar en HSPICE el circuito con una carga idéntica y reportar por separado \(tpHL\), \(tpLH\), la VTC y la corriente de cortocircuito.
+**Corrección metodológica:** se retira la predicción anterior de 83 ps, obtenida usando corriente de equilibrio DC como corriente del flanco. Esa sustitución no representa las condiciones de entrada de la prueba temporal. Los nuevos retardos analíticos se calcularán con resistencias efectivas de transición; no se ajustarán artificialmente para coincidir con SPICE.
+
+#### Primera comprobación con el tamaño DC
+
+Los archivos de `spice_decks/resultados_revision_20261116_213433` reportan, para el tamaño \(W_P=1.215\,\mu\mathrm{m}\), esquina `tm` y 70 grados Celsius:
+
+| Medida | Resultado |
+|---|---:|
+| Entrada para salida de 0.9 V (no cruce exacto Vin=Vout) | 0.9058 V |
+| Retardo alto a bajo | 30.11 ps |
+| Retardo bajo a alto | 23.47 ps |
+| Retardo promedio | 26.79 ps |
+
+La diferencia de retardos es aproximadamente 6.64 ps, o 24.8% del promedio: este tamaño no garantiza simetría dinámica. La entrada de esta primera prueba tiene flancos de 10 ps; el nuevo barrido usa flancos de 1 ps y mide el segundo ciclo, por lo que no se deben exigir números idénticos entre ambas pruebas.
+
+La medida DC de aproximadamente -49.77 microamperios corresponde a la alimentación conjunta de dos etapas. No se reporta como corriente exclusiva del inversor bajo prueba.
 
 Para facilitar esa comprobación se prepararon dos decks: `spice_decks/self_loaded_inverter_dc.sp` barre la entrada para obtener la VTC, el umbral medido y la corriente de alimentación en \(V_{out}=V_{DD}/2\); `spice_decks/self_loaded_inverter_tran.sp` mide \(tpHL\), \(tpLH\), \(tpd\), \(tfall\) y \(trise\) con entrada cuadrada. Ambos instancian dos inversores idénticos con \(N=4\), \(P=13.5\) y `scale=90n`, que corresponden a \(W_N=0.36\,\mu\mathrm{m}\) y \(W_P=1.215\,\mu\mathrm{m}\). Ejecutar desde `spice_decks` para que se resuelva el `.include 'min_inverter.sp'`. Las librerías se referencian desde `/mnt/vol_NFS_rh003/estudiantes/dmedina_cadence/vlsi/Hspice/lp5mos/` y deben estar disponibles en el entorno HSPICE.
 
@@ -244,7 +261,7 @@ Tanto el proceso de optimización manual como el generado por hspice convergen a
 
 Tomando todos estos parámetros en consideración, se puede concluir que valores cercanos a ratios de 2:1 y 3:1 pueden cumplir para distintos requisitos de diseño, ya sea en consumo de potencia, velocidad o simetría de las señales.
 
-> **Pendiente para completar 1.b:** verificar/ajustar en SPICE el inversor con carga idéntica; incluir su VTC, corriente de cortocircuito y respuesta transitoria; y comparar cuantitativamente los retardos calculados (~83 ps por transición) con los simulados y con el diseño 1.a.
+> **Pendiente para completar 1.b:** seleccionar el ratio por simetría en el nuevo barrido, refinar alrededor del cruce de retardos, recalcular capacitancias y retardos analíticos, e incluir VTC y corriente DC aislada para comparar con 1.a.
 
 ### Parte 2.b (continuación). Resultados preliminares de extracción de resistencia desde retardos
 
@@ -261,6 +278,32 @@ $tpdr = \frac{3}{2} * R_{p} * C$
 ### Parte 2.c. Comparación de métodos (pendiente)
 
 Comparar estos valores con los obtenidos por descarga de capacitor (2.a), documentar ambos métodos y justificar cuál es preferible para el diseño manual.
+
+## Nueva ronda de simulaciones para completar el informe
+
+Ejecutar en Linux, desde la raíz del proyecto:
+
+```bash
+bash spice_decks/run_characterization.sh
+```
+
+El script conserva cada ejecución en una carpeta nueva dentro de `spice_decks` y comprueba errores, medidas fallidas y fin normal de HSPICE. No ejecuta los decks históricos.
+
+| Deck | Objetivo |
+|---|---|
+| `characterization_dc.sp` | VTC, cruce exacto Vin=Vout y pico de corriente DC del inversor bajo prueba, con alimentación separada de la carga. |
+| `characterization_tran.sp` | Barrido FO1 de P/N entre 1.5 y 4 con paso 0.025; incluye 2, 3.1 y 3.375. Mide retardos, diferencia y asimetría porcentual en segundo ciclo. |
+| `channel_discharge.sp` | Pruebas duales NMOS y PMOS mínimos de 0.36/0.18 micrometros con capacitores de 1 y 2 pF. |
+
+Los nuevos decks usan `characterization_common.inc`, que conserva las geometrías de difusión de la celda original pero expone las alimentaciones y usa el nodo de referencia 0. Todos usan esquina `tm` y temperatura de 70 grados Celsius. No se suman capacitores analíticos a la carga FO1: el modelo SPICE ya contiene capacitancias.
+
+En la prueba de descarga, el capacitor NMOS comienza a 1.8 V y descarga; el capacitor PMOS comienza en 0 V y carga, de modo que su \(V_{SD}\) cae de 1.8 a 0.9 V. Se exportan tensiones y corrientes con `.print` y `.probe` para calcular:
+
+$$R_n(t)=\frac{V(dn)}{I(VSN)},\qquad R_p(t)=\frac{V_{DD}-V(dp)}{-I(VSP)}$$
+
+El promedio solicitado se calculará solo en el intervalo donde cada tensión de canal esté entre \(V_{DD}\) y \(V_{DD}/2\), documentando el muestreo. Las medidas `rn_rc` y `rp_rc`, obtenidas como \(t_{1/2}/(\ln(2)C)\), son referencias RC adicionales y no sustituyen ese promedio. Comparar ambos valores de capacitor permitirá evaluar si las parásitas son despreciables.
+
+Conservar la carpeta de resultados completa, especialmente los `.lis`, `.ms0.csv`, `.mt0.csv` y las formas de onda. Las salidas impresas de los `.lis` permiten analizar las descargas sin depender de un lector de archivos binarios. Los nuevos decks quedan pendientes de validación sintáctica y numérica en el HSPICE del servidor.
 
 # Bibliografía
 [1] N. Weste and D. Harris, CMOS VLSI Design: A Circuits and Systems Perspective, 4 edition.
