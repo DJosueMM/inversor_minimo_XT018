@@ -8,7 +8,7 @@ from pathlib import Path
 from statistics import fmean
 
 from first_order_model import (
-    critical_voltage, crossings, current_per_width,
+    critical_voltage, crossings, current_per_width, fo1_sizing,
     on_resistance, read_hspice_2013_transient, switching_voltage, vtc, waveform_window,
 )
 
@@ -284,6 +284,15 @@ def main():
         print("VTC comparison:", row)
     rn, rp = on_resistance("n"), on_resistance("p")
     print("Independent model Rn/Rp ohm and symmetric ratio:", rn, rp, rp / rn)
+    load_constant = 2 * cgn * 1e-15
+    load_slope = 2 * cgp_per_ratio * 1e-15
+    print("Rabaey FO1 sizing, independent model:",
+          fo1_sizing(rn, rp, load_constant, load_slope))
+    for row in comparison:
+        if row["ratio"] in (2.0, best_tran["ratio"]):
+            print("Rabaey FO1 sizing, delay extraction at ratio", row["ratio"],
+                  fo1_sizing(row["Rn_delay_ohm"], row["Rp_delay_normalized_036um_ohm"],
+                             load_constant, load_slope))
     for ratio in (2.425, 3.125, rp / rn):
         load = 2 * (cgn + ratio * cgp_per_ratio) * 1e-15
         print("Independent model delays ps:", ratio, math.log(2) * load * rn * 1e12,

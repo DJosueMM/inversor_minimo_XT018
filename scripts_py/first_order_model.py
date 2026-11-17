@@ -11,18 +11,19 @@ PARAMETERS = {"n": (256.0, 0.58, 475.0), "p": (52.0, 0.65, 170.0)}
 def critical_voltage(kind):
     kp, threshold, ion = PARAMETERS[kind]
     gain = kp / 0.18
-    dsat = math.sqrt(2 * ion / gain)
-    if dsat >= SUPPLY - threshold:
+    overdrive = SUPPLY - threshold
+    denominator = gain * overdrive**2 - 2 * ion
+    if denominator <= 0:
         raise ValueError("ION calibration cannot produce a positive critical voltage")
-    return dsat * dsat / (2 * (SUPPLY - threshold - dsat))
+    return 2 * ion * overdrive / denominator
 
 
 def current_per_width(kind, gate, drain):
-    """Microampere/micrometer; magnitudes for both channel types."""
+    """Weste 4th ed., Eqs. 2.26-2.28; microampere/micrometer, magnitudes."""
     kp, threshold, _ = PARAMETERS[kind]
     overdrive = max(gate - threshold, 0.0)
     critical = critical_voltage(kind)
-    saturation = critical * (math.sqrt(1 + 2 * overdrive / critical) - 1)
+    saturation = critical * overdrive / (critical + overdrive)
     voltage = min(max(drain, 0.0), saturation)
     return (kp / 0.18) * (overdrive * voltage - voltage * voltage / 2) / (
         1 + voltage / critical
@@ -68,6 +69,21 @@ def on_resistance(kind):
         weight = 1 if i in (0, steps) else (4 if i % 2 else 2)
         total += weight / current
     return total * increment / (3 * math.log(2))
+
+
+def fo1_sizing(rn, rp, load_constant, load_slope):
+    """Rabaey Sec. 5.4.3 with CL=A+B*r; resistances at equal reference width."""
+    values = (rn, rp, load_constant, load_slope)
+    if any(not math.isfinite(value) or value <= 0 for value in values):
+        raise ValueError("FO1 sizing requires finite positive resistances and capacitances")
+    symmetric_ratio = rp / rn
+    return {
+        "symmetric_ratio": symmetric_ratio,
+        "free_ratio": math.sqrt(load_constant * rp / (load_slope * rn)),
+        "symmetric_delay_s": math.log(2) * rn * (
+            load_constant + load_slope * symmetric_ratio
+        ),
+    }
 
 
 def read_hspice_2013_transient(path):

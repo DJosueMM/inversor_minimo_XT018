@@ -5,7 +5,7 @@ from pathlib import Path
 
 from analyze_characterization import measurements, print_tables, svg_plot
 from first_order_model import (
-    PARAMETERS, current_per_width, on_resistance,
+    PARAMETERS, critical_voltage, current_per_width, fo1_sizing, on_resistance,
     read_hspice_2013_transient, switching_voltage, vtc, waveform_window,
 )
 
@@ -68,10 +68,55 @@ class AnalysisTests(unittest.TestCase):
                 ratio * current_per_width("p", 1.8 - vm, 1.8 - vm),
             )
 
+    def test_weste_linear_and_saturation_expressions(self):
+        for kind, (kp, threshold, _) in PARAMETERS.items():
+            critical = critical_voltage(kind)
+            for gate in (.9, 1.8):
+                overdrive = gate - threshold
+                saturation = overdrive * critical / (overdrive + critical)
+                expected_sat = (kp / .18) * critical * overdrive**2 / (2 * (overdrive + critical))
+                self.assertAlmostEqual(current_per_width(kind, gate, saturation), expected_sat)
+                self.assertAlmostEqual(current_per_width(kind, gate, 1.8), expected_sat)
+                drain = saturation / 2
+                expected_linear = (kp / .18) * (overdrive * drain - drain**2 / 2) / (1 + drain / critical)
+                self.assertAlmostEqual(current_per_width(kind, gate, drain), expected_linear)
+                self.assertAlmostEqual(
+                    current_per_width(kind, gate, saturation * (1 - 1e-8)),
+                    expected_sat, places=5,
+                )
+
     def test_binary_waveform_rejects_truncated_file(self):
         self.path.write_bytes(b"truncated")
         with self.assertRaises(ValueError):
             read_hspice_2013_transient(self.path)
+
+    def test_rabaey_fo1_free_minimum_and_symmetry(self):
+        rn, rp = 7220.472571010651, 17546.78550692067
+        a, b = 1.334016e-15, 1.385136e-15
+        result = fo1_sizing(rn, rp, a, b)
+        ratio = result["symmetric_ratio"]
+        self.assertAlmostEqual(ratio, 2.430143641479777)
+        self.assertAlmostEqual(result["free_ratio"], 1.5298550456224107)
+        self.assertAlmostEqual(result["symmetric_delay_s"] * 1e12, 23.523273640902023)
+        self.assertAlmostEqual(rn, rp / ratio)
+        free = result["free_ratio"]
+        derivative = b * rn - a * rp / free**2
+        self.assertAlmostEqual(derivative, 0)
+        def delay(r):
+            return (a + b * r) * (rn + rp / r)
+        self.assertLess(delay(free), delay(free * .99))
+        self.assertLess(delay(free), delay(free * 1.01))
+        self.assertNotAlmostEqual(rn, rp / free)
+        # Equal capacitance per unit width recovers Rabaey's sqrt(Rp/Rn).
+        self.assertAlmostEqual(fo1_sizing(rn, rp, a, a)["free_ratio"], (rp / rn)**.5)
+
+    def test_rabaey_fo1_rejects_invalid_parameters(self):
+        for value in (0, -1, float("nan"), float("inf")):
+            for index in range(4):
+                values = [1., 1., 1., 1.]
+                values[index] = value
+                with self.assertRaises(ValueError):
+                    fo1_sizing(*values)
 
     def test_waveform_window_includes_interpolated_endpoints(self):
         rows = [(0.0, 0.0), (1e-9, 1.0), (2e-9, 0.0)]

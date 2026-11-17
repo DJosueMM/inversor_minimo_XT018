@@ -1,1 +1,2 @@
 spice_decks/run_characterization.sh text eol=lf
+spice_decks/run_methodology.sh text eol=lf
