@@ -1,0 +1,53 @@
+****** PrimeSim HSPICE -- U-2023.03-SP2 linux64 (Aug 24 2023 8388748) ******
+Input File: methodology_dc.sp
+lic:
+lic: FLEXlm: SDK_12.11.9.1
+lic: USER:   dmedina              HOSTNAME: rh-cadence-tfg
+lic: HOSTID: 15ac4b06             PID:      2462564
+lic: Using FLEXlm license file:
+lic: 27020@172.21.99.41
+lic: Checkout 1 hspice
+lic: License/Maintenance for hspice will expire on 28-sep-2027/2026.03
+lic: 1(in_use)/50(total) FLOATING license(s) on SERVER 27020@172.21.99.41
+lic:
+
+ init: begin read circuit files, cpu clock= 2.36E+00
+       option search = /mnt/vol_synopsys2023/synopsys/hspice/U-2023.03-SP2/hspice/parts/ad
+       option search = /mnt/vol_synopsys2023/synopsys/hspice/U-2023.03-SP2/hspice/parts/behave
+       option search = /mnt/vol_synopsys2023/synopsys/hspice/U-2023.03-SP2/hspice/parts/bjt
+       option search = /mnt/vol_synopsys2023/synopsys/hspice/U-2023.03-SP2/hspice/parts/burr_brn
+       option search = /mnt/vol_synopsys2023/synopsys/hspice/U-2023.03-SP2/hspice/parts/comlinear
+       option search = /mnt/vol_synopsys2023/synopsys/hspice/U-2023.03-SP2/hspice/parts/dio
+       option search = /mnt/vol_synopsys2023/synopsys/hspice/U-2023.03-SP2/hspice/parts/fet
+       option search = /mnt/vol_synopsys2023/synopsys/hspice/U-2023.03-SP2/hspice/parts/lin_tech
+       option search = /mnt/vol_synopsys2023/synopsys/hspice/U-2023.03-SP2/hspice/parts/pci
+       option search = /mnt/vol_synopsys2023/synopsys/hspice/U-2023.03-SP2/hspice/parts/signet
+       option search = /mnt/vol_synopsys2023/synopsys/hspice/U-2023.03-SP2/hspice/parts/ti
+       option search = /mnt/vol_synopsys2023/synopsys/hspice/U-2023.03-SP2/hspice/parts/tline
+       option search = /mnt/vol_synopsys2023/synopsys/hspice/U-2023.03-SP2/hspice/parts/xilinx
+       option post
+       option scale =    9.000E-08
+       option measform =     3.00
+       option measdgt =     10.0
+       option numdgt =     10.0
+       option ingold =     2.00
+       option parhier = local
+ init: end read circuit files, cpu clock= 2.39E+00 peak memory=     524 mb
+ init: begin check errors, cpu clock= 2.39E+00
+ init: end check errors, cpu clock= 2.41E+00 peak memory=     524 mb
+ init: begin setup matrix, pivot=     0 cpu clock= 2.41E+00
+       establish matrix -- done, cpu clock= 2.41E+00 peak memory=     524 mb
+       re-order matrix -- done, cpu clock= 2.41E+00 peak memory=     524 mb
+ init: end setup matrix, cpu clock= 2.42E+00 peak memory=     524 mb
+ sweep: data            data1            begin, #sweeps =   2
+ data: data=dc_ratios       ratio           =    6.26E+00
+ output: methodology_dc.ms0
+ sweep: dc dc1    begin, #sweeps= 901 cpu clock= 2.42E+00
+ sweep: dc dc1    end, cpu clock= 2.56E+00 peak memory=     524 mb
+ data: data=dc_ratios       ratio           =    2.00E+00
+ output: methodology_dc.sw0
+ sweep: dc dc2    begin, #sweeps= 901 cpu clock= 2.57E+00
+ sweep: dc dc2    end, cpu clock= 2.71E+00 peak memory=     524 mb
+ sweep: data            data            1 end
+>info:         ***** hspice job concluded
+ lic: Release hspice token(s)

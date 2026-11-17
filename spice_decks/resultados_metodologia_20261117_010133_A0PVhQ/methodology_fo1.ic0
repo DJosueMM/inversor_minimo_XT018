@@ -1,0 +1,18 @@
+* "simulator" "PrimeSim HSPICE"
+* "version" "U-2023.03-SP2 linux64"
+* "format" "HSP"
+* "rundate" "01:01:39 11/17/2026 "
+* "netlist" "methodology_fo1.sp "
+* "runtitle" "* project 1.b: almost-ideal input; separate from shaped-input r extraction."
+* time =  0.000000000e+00 
+* temperature =  7.000000000e+01 
+*** BEGIN: Saved Operating Point ***                     
+.option 
++ gmindc= 1.000000000e-12 
+.nodeset
++ in = 0.000000000e+00 
++ load_out = 1.165614097e-08 
++ out = 1.799999987e+00 
++ vdrv = 1.800000000e+00 
++ vload = 1.800000000e+00 
+***   END: Saved Operating Point ***                     
