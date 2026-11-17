@@ -1,0 +1,6 @@
+$DATA1 SOURCE='PrimeSim HSPICE' VERSION='U-2023.03-SP2 linux6' PARAM_COUNT=2
+$OPTION MEASFORM=3
+.TITLE '* 2.a: descarga nmos y carga dual pmos, ambos de w=0.36um l=0.18um.'
+index,ctest,cap_used,tn_half,tp_half,rn_rc,rp_rc,temper,alter#
+1, 1.000000000e-12, 1.000000000e-12, 4.399465449e-09, 8.334228150e-09, 6.347086985e+03, 1.202374962e+04, 7.000000000e+01,1
+2, 2.000000000e-12, 2.000000000e-12, 8.702322500e-09, 1.663467223e-08, 6.277398757e+03, 1.199937957e+04, 7.000000000e+01,1

@@ -1,0 +1,3096 @@
+ ****** PrimeSim HSPICE -- U-2023.03-SP2 linux64 (Aug 24 2023 8388748) ******
+  Copyright (c) 1986 - 2026 by Synopsys, Inc. All Rights Reserved.
+  This software and the associated documentation are proprietary
+  to Synopsys, Inc. This software may only be used in accordance
+  with the terms and conditions of a written license agreement with
+  Synopsys, Inc. All other use, reproduction, or distribution of
+  this software is strictly prohibited.
+  Input File: characterization_tran.sp                                          
+  Command line options: /mnt/vol_synopsys2023/synopsys/hspice/U-2023.03-SP2/hspice/linux64/hspice -i characterization_tran.sp -o resultados_caracterizacion_20261116_231335_H9qsFY/characterization_tran
+  Start time: Mon Nov 16 23:13:46 2026
+ lic:  
+ lic: FLEXlm: SDK_12.11.9.1 
+ lic: USER:   dmedina              HOSTNAME: rh-cadence-tfg 
+ lic: HOSTID: 15ac4b06             PID:      2354121 
+ lic: Using FLEXlm license file: 
+ lic: 27020@172.21.99.41 
+ lic: Checkout 1 hspice 
+ lic: License/Maintenance for hspice will expire on 28-sep-2027/2026.03 
+ lic: 1(in_use)/50(total) FLOATING license(s) on SERVER 27020@172.21.99.41 
+ lic:   
+
+ **info** IF-.ELSE condition won’t be re-calculated for each data/parameter sweep. If .data/sweep parameter assignments are used in .if condition, please use .alter as a workaround.
+
+1****** PrimeSim HSPICE -- U-2023.03-SP2 linux64 (Aug 24 2023 8388748) ******
+ ******  
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** circuit name directory
+ circuit number to circuit name directory
+   number circuitname                     definition         multiplier
+        0 main circuit
+        1 xdrv.                           inv_char           1.00 
+        2 xload.                          inv_char           1.00 
+        3 xdrv.xn.                        ne                 1.00 
+        4 xdrv.xp.                        pe                 1.00 
+        5 xload.xn.                       ne                 1.00 
+        6 xload.xp.                       pe                 1.00 
+ ******  
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** mos   model parameters tnom=  25.000 temp=  25.000 ******
+ Model file: /mnt/vol_NFS_rh003/estudiantes/dmedina_cadence/vlsi/Hspice/lp5mos/./models/mos/ne.mod
+ Model line:           54
+ Model Name: nemod  
+ BSIM4 Model (Level 54)
+    MOBMOD = 2
+    BINUNIT = 1
+    PARAMCHK = 1
+    CAPMOD = 2
+    DIOMOD = 1
+    RDSMOD = 0
+    TRNQSMOD = 0
+    ACNQSMOD = 0
+    RBODYMOD = 0
+    RGATEMOD = 0
+    PERMOD = 1
+    GEOMOD = 1
+    RGEOMOD = 0
+    FNOIMOD = 1
+    TNOIMOD = 2
+    IGCMOD = 0
+    IGBMOD = 0
+    STIMOD = 1
+    VBFWDMOD = 0
+    VERSION =    4.7 
+    TOXREF = 4.1e-09 
+    TOXE = 4.1e-09 
+    TOXP = 4.1e-09 
+    TOXM = 4.1e-09 
+    DTOX =      0 
+    EPSROX =    3.9 
+    CDSC = 0.0004612 
+    CDSCB = 6.827e-05 
+    CDSCD =      0 
+    CIT =      0 
+    NFACTOR =    1.3 
+    XJ = 1.5e-07 
+    VSAT = 8.162e+04 
+    A0 =    1.3 
+    AGS = 0.1512 
+    A1 =      0 
+    A2 =      1 
+    AT = 1.11e+05 
+    KETA =   0.07 
+    NSUB =  6e+16 
+    NDEP = 5.7e+17 
+    NSD =  6e+16 
+    NGATE =      0 
+    GAMMA1 =      0 
+    GAMMA2 =      0 
+    VBX =      0 
+    VBM =     -3 
+    XT = 1.55e-07 
+    K1 = 0.5937 
+    KT1 = -0.265 
+    KT1L =      0 
+    KT2 =  -0.05 
+    K2 = 0.03557 
+    K3 =    0.1 
+    K3B =   -3.5 
+    LPE0 = -1.406e-07 
+    LPEB = -1.328e-07 
+    DVTP0 =      0 
+    DVTP1 =      0 
+    W0 =  5e-07 
+    DVT0 =      1 
+    DVT1 =   0.87 
+    DVT2 = -0.1332 
+    DVT0W =  5e+04 
+    DVT1W = 1.23e+07 
+    DVT2W = -0.052 
+    DROUT =   0.36 
+    DSUB =   0.56 
+    VTH0 = 0.6329 
+    EU =   1.67 
+    UA =  8e-16 
+    UA1 =      0 
+    UB =  1e-23 
+    UB1 =      0 
+    UC = -4e-16 
+    UC1 =      0 
+    U0 = 0.0395 
+    UTE =  -1.68 
+    VOFF = -0.125 
+    VOFFL = -2e-09 
+    MINV =      0 
+    FPROUT =      0 
+    PDITS =  0.007 
+    PDITSD =   0.77 
+    PDITSL =      0 
+    DELTA =  0.005 
+    RDSW =    200 
+    RDSWMIN =      0 
+    RDWMIN =      0 
+    RSWMIN =      0 
+    RDW =    100 
+    RSW =    100 
+    PRWG = 0.00094 
+    PRWB =      0 
+    PRT =      0 
+    ETA0 =    0.4 
+    ETAB =  -0.07 
+    PCLM = 0.3104 
+    PDIBLC1 =   0.12 
+    PDIBLC2 = 0.000257 
+    PDIBLCB =      0 
+    PSCBE1 = 5.24e+08 
+    PSCBE2 =  1e-05 
+    PVAG =      0 
+    WR =  1.042 
+    DWG =      0 
+    DWB =      0 
+    XW =      0 
+    XWREF =      0 
+    XL =      0 
+    XLREF =      0 
+    B0 = -1.209e-07 
+    B1 = 2.706e-08 
+    ALPHA0 = -3.246e-06 
+    ALPHA1 =  8.093 
+    AGIDL =      0 
+    BGIDL = 2.3e+09 
+    CGIDL =    0.5 
+    PHIN =      0 
+    EGIDL =    0.8 
+    AIGC =  0.054 
+    BIGC =  0.054 
+    CIGC =  0.075 
+    AIGSD =   0.43 
+    BIGSD =  0.054 
+    CIGSD =  0.075 
+    AIGBACC =   0.43 
+    BIGBACC =  0.054 
+    CIGBACC =  0.075 
+    AIGBINV =   0.35 
+    BIGBINV =   0.03 
+    CIGBINV =  0.006 
+    NIGC =      1 
+    NIGBINV =      3 
+    NIGBACC =      1 
+    NTOX =      1 
+    EIGBINV =    1.1 
+    PIGCD =      1 
+    POXEDGE =      1 
+    XRCRG1 =     12 
+    TNOIA =    1.5 
+    TNOIB =    3.5 
+    NTNOI =      1 
+    XRCRG2 =      1 
+    BETA0 =  18.04 
+    IJTHDFWD =    0.1 
+    IJTHSFWD =    0.1 
+    IJTHDREV =    0.1 
+    IJTHSREV =    0.1 
+    XJBVD =      1 
+    XJBVS =      1 
+    BVD =     10 
+    BVS =     10 
+    VFB =     -1 
+    GBMIN =  1e-12 
+    RBDB =     50 
+    RBPB =     50 
+    RBSB =     50 
+    RBPS =     50 
+    RBPD =     50 
+    CGSL = 1.407e-10 
+    CGDL = 1.407e-10 
+    CKAPPAS =    0.6 
+    CKAPPAD =    0.6 
+    CF =      0 
+    CLC =  1e-07 
+    CLE =    0.6 
+    DWC =  1e-08 
+    DLC = 3.646e-08 
+    DLCIG =      0 
+    DWJ =      0 
+    VFBCV =     -1 
+    ACDE =      1 
+    MOIN =     15 
+    NOFF =  2.815 
+    VOFFCV =      0 
+    DMCG =      0 
+    DMCI =      0 
+    DMDG =      0 
+    DMCGT =      0 
+    XGW =      0 
+    XGL =      0 
+    RSHG =    7.5 
+    NGCON =      1 
+    TCJ =      0 
+    TPB =      0 
+    TCJSW =      0 
+    TPBSW =      0 
+    TCJSWG =      0 
+    TPBSWG =      0 
+    SK0 =      0 
+    SK1 =      0 
+    SK2 =      0 
+    SL =  2e-06 
+    SW =  2e-06 
+    K =      0 
+    LNFACTOR =   0.07 
+    LAT = -1.35e+04 
+    LKETA =  -0.05 
+    LK1 =  0.037 
+    LKT1 =  0.006 
+    LKT2 = -0.004 
+    LK2 =  0.015 
+    LVTH0 = 0.0908 
+    LUA = -1e-16 
+    LUA1 = 4.02e-16 
+    LUC =  5e-17 
+    LUC1 = -5e-17 
+    LU0 = 0.00191 
+    LUTE =  0.301 
+    LDELTA =  0.005 
+    LRDSW =     11 
+    LALPHA0 = 6.41e-07 
+    LBETA0 = -0.3602 
+    WNFACTOR =  -0.08 
+    WA0 =    0.1 
+    WKETA = -0.015 
+    WK1 =  -0.02 
+    WKT1 =  0.005 
+    WVTH0 = -0.01557 
+    WUA =  2e-17 
+    WUC =  1e-17 
+    WUC1 =  1e-17 
+    WU0 = 0.00094 
+    WUTE =  0.033 
+    WVOFF = -0.001 
+    PNFACTOR =  0.005 
+    PVSAT =   4735 
+    PAT =   1500 
+    PA0 = -0.0027 
+    PAGS =  -0.01 
+    PKETA = 0.0125 
+    PK1 = -0.0002 
+    PKT1 = -0.001 
+    PKT2 = -0.0005 
+    PK2 = -0.0022 
+    PVTH0 = -0.00451 
+    PUA =  1e-19 
+    PUA1 = -6e-17 
+    PUC = -1.5e-18 
+    PUC1 =  9e-18 
+    PU0 = 0.00233 
+    PUTE = -0.0495 
+    PRDSW =     -1 
+    TNOM =  300.1 
+    CGSO = 2.284e-10 
+    CGDO = 2.284e-10 
+    CGBO =      0 
+    XPART =      1 
+    RSH =    4.4 
+    JSS = 2.345e-05 
+    JSWS = 8.359e-10 
+    JSWGS = 8.359e-10 
+    PBS =   1.03 
+    MJS = 0.4816 
+    PBSWS = 0.7386 
+    MJSWS = 0.2465 
+    CJS = 0.001273 
+    CJSWS = 3.453e-10 
+    NJS =  1.925 
+    PBSWGS = 0.5794 
+    MJSWGS =  0.211 
+    CJSWGS = 4.764e-10 
+    XTIS =      3 
+    JSD = 2.345e-05 
+    JSWD = 8.359e-10 
+    JSWGD = 8.359e-10 
+    PBD =   1.03 
+    MJD = 0.4816 
+    PBSWD = 0.7386 
+    MJSWD = 0.2465 
+    CJD = 0.001273 
+    CJSWD = 3.453e-10 
+    NJD =  1.925 
+    PBSWGD = 0.5794 
+    MJSWGD =  0.211 
+    CJSWGD = 4.764e-10 
+    XTID =      3 
+    LMLT =      1 
+    WMLT =      1 
+    LINT = 1.4e-08 
+    LL =      0 
+    LLC =      0 
+    LLN =      1 
+    LW =      0 
+    LWC =      0 
+    LWN =   0.92 
+    LWL = -4.7e-21 
+    LWLC =      0 
+    LMIN =      0 
+    LMAX =      1 
+    WINT =  8e-09 
+    WL =      0 
+    WLC =      0 
+    WLN =      1 
+    WW =      0 
+    WWC =      0 
+    WWN =      1 
+    WWL =      0 
+    WWLC =      0 
+    WMIN =      0 
+    WMAX =      1 
+    NOIA = 1.733e+42 
+    NOIB = 3.144e+22 
+    NOIC =  1e+06 
+    EM = 4.1e+07 
+    EF =  1.012 
+    AF =  1.044 
+    KF = 3.26e-27 
+    TRS =      0 
+    TRD =      0 
+    TEMPMOD  =      0 
+    LAMBDA   =      0 
+    VTL      =  2e+05 m/s
+    LC       =  5e-09 
+    XN       =      3 
+    LLAMBDA  =      0 
+    LVTL     =      0 
+    LXN      =      0 
+    WLAMBDA  =      0 
+    WVTL     =      0 
+    WXN      =      0 
+    PLAMBDA  =      0 
+    PVTL     =      0 
+    PXN      =      0 
+    RNOIA    =  0.597 
+    RNOIB    = 0.5164 
+    SAREF(SA0) =  1e-05 m
+    SBREF(SB0) =  1e-05 m
+    WLOD     =      0 m
+    KU0      =      0 1/m
+    KVSAT    =      0 
+    KVTH0    =      0 m
+    TKU0     =      0 
+    LLODKU0  =      0 
+    WLODKU0  =      0 
+    LLODVTH  =      0 
+    WLODVTH  =      0 
+    LKU0     =      0 
+    WKU0     =      0 
+    PKU0     =      0 
+    LKVTH0   =      0 
+    WKVTH0   =      0 
+    PKVTH0   =      0 
+    STK2     =      0 
+    LODK2    =      1 
+    STETA0   =      0 
+    LODETA0  =      1 
+    LXRCRG1  =      0 
+    WXRCRG1  =      0 
+    PXRCRG1  =      0 
+    LXRCRG2  =      0 
+    WXRCRG2  =      0 
+    PXRCRG2  =      0 
+     *** UCB's BSIM4.4.0 new diode model is activated. ***
+    *** UCB's Diode Model Parameters ***
+    JTSS         =      0 
+    JTSSWS       =      0 
+    JTSSWGS      =      0 
+    JTSD         =      0 
+    JTSSWD       =      0 
+    JTSSWGD      =      0 
+    NJTS         =     20 
+    NJTSSW       =     20 
+    NJTSSWG      =     20 
+    XTSS         =   0.02 
+    XTSSWS       =   0.02 
+    XTSSWGS      =   0.02 
+    XTSD         =   0.02 
+    XTSSWD       =   0.02 
+    XTSSWGD      =   0.02 
+    TNJTS        =      0 
+    TNJTSSW      =      0 
+    TNJTSSWG     =      0 
+    VFBSDOFF     =      0 
+    LVFBSDOFF    =      0 
+    WVFBSDOFF    =      0 
+    PVFBSDOFF    =      0 
+    LINTNOI      = 1.4e-08 
+    VTSS         =     10 
+    VTSD         =     10 
+    VTSSWS       =     10 
+    VTSSWD       =     10 
+    VTSSWGS      =     10 
+    VTSSWGD      =     10 
+    TTDIOMOD     =      1 
+     *** UCB's BSIM4.5.0 new model is activated. ***
+    UD         =  5e+15 
+    UD1        =      0 
+    UP         =      0 
+    LP         =  1e-08 
+    TVOFF      =      0 
+    TVFBSDOFF  =      0 
+    RBPS0      =     50 
+    RBPSL      =      0 
+    RBPSW      =      0 
+    RBPSNF     =      0 
+    RBPD0      =     50 
+    RBPDL      =      0 
+    RBPDW      =      0 
+    RBPDNF     =      0 
+    RBPBX0     =    100 
+    RBPBXL     =      0 
+    RBPBXW     =      0 
+    RBPBXNF    =      0 
+    RBPBY0     =    100 
+    RBPBYL     =      0 
+    RBPBYW     =      0 
+    RBPBYNF    =      0 
+    RBSBX0     =    100 
+    RBSBY0     =    100 
+    RBDBX0     =    100 
+    RBDBY0     =    100 
+    RBSDBXL    =      0 
+    RBSDBXW    =      0 
+    RBSDBXNF   =      0 
+    RBSDBYL    =      0 
+    RBSDBYW    =      0 
+    RBSDBYNF   =      0 
+    LUD        =      0 
+    LUD1       =      0 
+    LUP        =      0 
+    LLP        =      0 
+    LTVOFF     =      0 
+    LTVFBSDOFF =      0 
+    WUD        =      0 
+    WUD1       =      0 
+    WUP        =      0 
+    WLP        =      0 
+    WTVOFF     =      0 
+    WTVFBSDOFF =      0 
+    PUD        =      0 
+    PUD1       =      0 
+    PUP        =      0 
+    PLP        =      0 
+    PTVOFF     =      0 
+    PTVFBSDOFF =      0 
+    WEB        =      0 
+    WEC        =      0 
+    KVTH0WE    =      0 
+    K2WE       =      0 
+    KU0WE      =      0 
+    SCREF      =  1e-05 
+    WPEMOD     =      0 
+    LKVTH0WE   =      0 
+    LK2WE      =      0 
+    LKU0WE     =      0 
+    WKVTH0WE   =      0 
+    WK2WE      =      0 
+    WKU0WE     =      0 
+    PKVTH0WE   =      0 
+    PK2WE      =      0 
+    PKU0WE     =      0 
+     *** UCB's BSIM4.6.0 new model is activated. ***
+    AGISL     =      0 
+    BGISL     = 2.3e+09 
+    CGISL     =    0.5 
+    EGISL     =    0.8 
+    AIGS      =   0.43 
+    BIGS      =  0.054 
+    CIGS      =  0.075 
+    AIGD      =   0.43 
+    BIGD      =  0.054 
+    CIGD      =  0.075 
+    NJTSD     =     20 
+    NJTSSWD   =     20 
+    NJTSSWGD  =     20 
+    TNJTSD    =      0 
+    TNJTSSWD  =      0 
+    TNJTSSWGD =      0 
+    DLCIGD    =      0 
+    LAGISL    =      0 
+    LBGISL    =      0 
+    LCGISL    =      0 
+    LEGISL    =      0 
+    LAIGS     =      0 
+    LBIGS     =      0 
+    LCIGS     =      0 
+    LAIGD     =      0 
+    LBIGD     =      0 
+    LCIGD     =      0 
+    WAGISL    =      0 
+    WBGISL    =      0 
+    WCGISL    =      0 
+    WEGISL    =      0 
+    WAIGS     =      0 
+    WBIGS     =      0 
+    WCIGS     =      0 
+    WAIGD     =      0 
+    WBIGD     =      0 
+    WCIGD     =      0 
+    PAGISL    =      0 
+    PBGISL    =      0 
+    PCGISL    =      0 
+    PEGISL    =      0 
+    PAIGS     =      0 
+    PBIGS     =      0 
+    PCIGS     =      0 
+    PAIGD     =      0 
+    PBIGD     =      0 
+    PCIGD     =      0 
+     *** UCB's BSIM4.6.1 new model is activated. ***
+    CVCHARGEMOD     = 0
+    MTRLMOD     = 0
+    EOT     = 1.5e-09 
+    VDDEOT     =    1.5 
+    ADOS     =      1 
+    BDOS     =      1 
+    PHIG     =   4.05 
+    EPSRGATE     =   11.7 
+    EASUB     =   4.05 
+    EPSRSUB     =   11.7 
+    NI0SUB     = 1.45e+10 
+    BG0SUB     =   1.16 
+    TBGASUB     = 0.000702 
+    TBGBSUB     =   1108 
+    MINVCV     =      0 
+    VOFFCV1     =      0 
+    LMINVCV     =      0 
+    WMINVCV     =      0 
+    PMINVCV     =      0 
+    TEMPEOT     =  300.1 
+    LEFFEOT     =      1 
+    WEFFEOT     =     10 
+    UCS         =   1.67 
+    UCSTE       = -0.004775 
+    LUCS        =      0 
+    LUCSTE      =      0 
+    WUCS        =      0 
+    WUCSTE      =      0 
+    PUCS        =      0 
+    PUCSTE      =      0 
+    JTWEFF      =      0 
+     *** UCB's BSIM4.6.6 new model is activated. ***
+    GIDLMOD     = 0
+    DVTP2       =      0 
+    DVTP3       =      0 
+    DVTP4       =      0 
+    DVTP5       =      0 
+    TNFACTOR    =      0 
+    TETA0       =      0 
+    TVOFFCV     =      0 
+    FGIDL       =      0 
+    KGIDL       =      0 
+    RGIDL       =      1 
+    FGISL       =      0 
+    KGISL       =      0 
+    RGISL       =      1 
+    TNOIC       =      0 
+    RNOIC       =  0.395 
+    LDVTP2      =      0 
+    LDVTP3      =      0 
+    LDVTP4      =      0 
+    LDVTP5      =      0 
+    LTNFACTOR   =      0 
+    LTETA0      =      0 
+    LTVOFFCV    =      0 
+    LFGIDL      =      0 
+    LKGIDL      =      0 
+    LRGIDL      =      0 
+    LFGISL      =      0 
+    LKGISL      =      0 
+    LRGISL      =      0 
+    WDVTP2      =      0 
+    WDVTP3      =      0 
+    WDVTP4      =      0 
+    WDVTP5      =      0 
+    WTNFACTOR   =      0 
+    WTETA0      =      0 
+    WTVOFFCV    =      0 
+    WFGIDL      =      0 
+    WKGIDL      =      0 
+    WRGIDL      =      0 
+    WFGISL      =      0 
+    WKGISL      =      0 
+    WRGISL      =      0 
+    PDVTP2      =      0 
+    PDVTP3      =      0 
+    PDVTP4      =      0 
+    PDVTP5      =      0 
+    PTNFACTOR   =      0 
+    PTETA0      =      0 
+    PTVOFFCV    =      0 
+    PFGIDL      =      0 
+    PKGIDL      =      0 
+    PRGIDL      =      0 
+    PFGISL      =      0 
+    PKGISL      =      0 
+    PRGISL      =      0 
+    MTRLCOMPATMOD      = 0
+ Model file: /mnt/vol_NFS_rh003/estudiantes/dmedina_cadence/vlsi/Hspice/lp5mos/./models/mos/pe.mod
+ Model line:           54
+ Model Name: pemod  
+ BSIM4 Model (Level 54)
+    MOBMOD = 2
+    BINUNIT = 2
+    PARAMCHK = 1
+    CAPMOD = 2
+    DIOMOD = 1
+    RDSMOD = 0
+    TRNQSMOD = 0
+    ACNQSMOD = 0
+    RBODYMOD = 0
+    RGATEMOD = 0
+    PERMOD = 1
+    GEOMOD = 0
+    RGEOMOD = 0
+    FNOIMOD = 1
+    TNOIMOD = 2
+    IGCMOD = 0
+    IGBMOD = 0
+    STIMOD = 1
+    VBFWDMOD = 0
+    VERSION =    4.7 
+    TOXREF = 3.927e-09 
+    TOXE = 3.9e-09 
+    TOXP = 3.9e-09 
+    TOXM = 3.927e-09 
+    DTOX =      0 
+    EPSROX =    3.9 
+    CDSC = 0.1269 
+    CDSCB = 0.07279 
+    CDSCD =      0 
+    CIT =      0 
+    NFACTOR =  1.053 
+    XJ =  2e-07 
+    VSAT = 8.54e+04 
+    A0 =  1.296 
+    AGS = 0.2042 
+    A1 =      0 
+    A2 =      1 
+    AT = 1.224e+05 
+    KETA = 0.03079 
+    NSUB =  6e+16 
+    NDEP = 1.231e+18 
+    NSD =  6e+16 
+    NGATE =      0 
+    GAMMA1 =      0 
+    GAMMA2 =      0 
+    VBX =      0 
+    VBM =     -3 
+    XT = 1.55e-07 
+    K1 = 0.8909 
+    KT1 = -0.2896 
+    KT1L = -9e-09 
+    KT2 = -0.06631 
+    K2 = -0.001423 
+    K3 = -16.17 
+    K3B =  5.716 
+    LPE0 = 2.558e-07 
+    LPEB = 8.882e-22 
+    DVTP0 =      0 
+    DVTP1 =      0 
+    W0 = 1.188e-07 
+    DVT0 =    2.2 
+    DVT1 =   0.53 
+    DVT2 = -0.032 
+    DVT0W = -2.653e+05 
+    DVT1W = 5.692e+06 
+    DVT2W = 0.1466 
+    DROUT = 0.1253 
+    DSUB = 0.5496 
+    VTH0 = -0.6597 
+    EU =      1 
+    UA = 9.862e-08 
+    UA1 = 4.905e-08 
+    UB = 3.526e-18 
+    UB1 =      0 
+    UC = -2.342e-08 
+    UC1 = 2.322e-08 
+    U0 = 0.4943 
+    UTE = -0.1696 
+    VOFF = -0.1124 
+    VOFFL = -2.615e-09 
+    MINV = -0.1807 
+    FPROUT =      0 
+    PDITS =      0 
+    PDITSD =      0 
+    PDITSL =      0 
+    DELTA =   0.01 
+    RDSW =  127.5 
+    RDSWMIN =      1 
+    RDWMIN =      0 
+    RSWMIN =      0 
+    RDW =    100 
+    RSW =    100 
+    PRWG =      0 
+    PRWB = -0.1266 
+    PRT =      0 
+    ETA0 = 0.9547 
+    ETAB =     -2 
+    PCLM = 0.2693 
+    PDIBLC1 = 0.0103 
+    PDIBLC2 = 1.476e-06 
+    PDIBLCB = -0.567 
+    PSCBE1 = 5.348e+08 
+    PSCBE2 =  1e-09 
+    PVAG =      0 
+    WR = 0.7269 
+    DWG = 1.279e-09 
+    DWB =      0 
+    XW =      0 
+    XWREF =      0 
+    XL =      0 
+    XLREF =      0 
+    B0 = 3.547e-08 
+    B1 =      0 
+    ALPHA0 = 3.748e-07 
+    ALPHA1 = 0.1817 
+    AGIDL =      0 
+    BGIDL = 2.3e+09 
+    CGIDL =    0.5 
+    PHIN =      0 
+    EGIDL =    0.8 
+    AIGC =   0.31 
+    BIGC =  0.024 
+    CIGC =   0.03 
+    AIGSD =   0.31 
+    BIGSD =  0.024 
+    CIGSD =   0.03 
+    AIGBACC =   0.43 
+    BIGBACC =  0.054 
+    CIGBACC =  0.075 
+    AIGBINV =   0.35 
+    BIGBINV =   0.03 
+    CIGBINV =  0.006 
+    NIGC =      1 
+    NIGBINV =      3 
+    NIGBACC =      1 
+    NTOX =      1 
+    EIGBINV =    1.1 
+    PIGCD =      1 
+    POXEDGE =      1 
+    XRCRG1 =     12 
+    TNOIA =    1.5 
+    TNOIB =    3.5 
+    NTNOI =      1 
+    XRCRG2 =      1 
+    BETA0 =     20 
+    IJTHDFWD =    0.1 
+    IJTHSFWD =    0.1 
+    IJTHDREV =    0.1 
+    IJTHSREV =    0.1 
+    XJBVD =      1 
+    XJBVS =      1 
+    BVD =     10 
+    BVS =     10 
+    VFB =     -1 
+    GBMIN =  1e-12 
+    RBDB =     50 
+    RBPB =     50 
+    RBSB =     50 
+    RBPS =     50 
+    RBPD =     50 
+    CGSL = 1.937e-10 
+    CGDL = 1.937e-10 
+    CKAPPAS =    0.6 
+    CKAPPAD =    0.6 
+    CF =      0 
+    CLC =  1e-07 
+    CLE =    0.6 
+    DWC = -6.131e-08 
+    DLC = 2.944e-08 
+    DLCIG =      0 
+    DWJ =      0 
+    VFBCV =     -1 
+    ACDE =      1 
+    MOIN =     15 
+    NOFF =    2.5 
+    VOFFCV = 3.631e-06 
+    DMCG =      0 
+    DMCI =      0 
+    DMDG =      0 
+    DMCGT =      0 
+    XGW =      0 
+    XGL =      0 
+    RSHG =    7.5 
+    NGCON =      1 
+    TCJ =      0 
+    TPB =      0 
+    TCJSW =      0 
+    TPBSW =      0 
+    TCJSWG =      0 
+    TPBSWG =      0 
+    SK0 =      0 
+    SK1 =      0 
+    SK2 =      0 
+    SL =  2e-06 
+    SW =  2e-06 
+    K =      0 
+    LA0 = -1.386e-07 
+    LAGS = -5.18e-08 
+    LK1 = -9.824e-09 
+    LVTH0 = 7.37e-08 
+    LUA = 2.039e-14 
+    LUA1 = -5.93e-15 
+    LUC = -2.495e-15 
+    LUC1 = 1.704e-15 
+    LU0 = 7.43e-08 
+    LUTE = -6.051e-08 
+    WVTH0 = -2.427e-08 
+    WUA = -8.047e-15 
+    WUA1 = -6.604e-15 
+    WUC = 2.034e-15 
+    WUC1 = -9.499e-16 
+    WU0 = -9.166e-09 
+    WUTE = -6.967e-08 
+    WVOFF = -7.039e-09 
+    PVSAT = 1.4e-08 
+    PA0 = 4.691e-14 
+    PAGS = 7.151e-14 
+    PVTH0 = 3.225e-16 
+    PUA = -2.546e-21 
+    PUA1 = 1.897e-23 
+    PUC = 5.668e-22 
+    PUC1 = -2.301e-22 
+    PU0 = -1.21e-14 
+    PUTE = 4.727e-15 
+    PVOFF = 2.808e-15 
+    TNOM =  300.1 
+    CGSO = 1.674e-10 
+    CGDO = 1.674e-10 
+    CGBO =      0 
+    XPART =      1 
+    RSH =    7.1 
+    JSS = 5.635e-06 
+    JSWS = 3.721e-11 
+    JSWGS = 3.721e-11 
+    PBS = 0.9294 
+    MJS = 0.4277 
+    PBSWS =  1.121 
+    MJSWS = 0.08685 
+    CJS = 0.0009831 
+    CJSWS = 2.124e-10 
+    NJS =  1.543 
+    PBSWGS =  0.799 
+    MJSWGS = 0.4054 
+    CJSWGS = 7.971e-10 
+    XTIS =      3 
+    JSD = 5.635e-06 
+    JSWD = 3.721e-11 
+    JSWGD = 3.721e-11 
+    PBD = 0.9294 
+    MJD = 0.4277 
+    PBSWD =  1.121 
+    MJSWD = 0.08685 
+    CJD = 0.0009831 
+    CJSWD = 2.124e-10 
+    NJD =  1.543 
+    PBSWGD =  0.799 
+    MJSWGD = 0.4054 
+    CJSWGD = 7.971e-10 
+    XTID =      3 
+    LMLT =      1 
+    WMLT =      1 
+    LINT = 1.594e-09 
+    LL =      0 
+    LLC =      0 
+    LLN =      1 
+    LW =      0 
+    LWC =      0 
+    LWN =      1 
+    LWL =      0 
+    LWLC =      0 
+    LMIN =      0 
+    LMAX =      1 
+    WINT = -1.139e-07 
+    WL =      0 
+    WLC =      0 
+    WLN =      1 
+    WW =      0 
+    WWC =      0 
+    WWN =      1 
+    WWL =      0 
+    WWLC =      0 
+    WMIN =      0 
+    WMAX =      1 
+    NOIA = 6.916e+41 
+    NOIB = 2.726e+25 
+    NOIC = 1.707e+10 
+    EM = 4.537e+07 
+    EF =      1 
+    AF =  1.851 
+    KF = 1.382e-23 
+    TRS =      0 
+    TRD =      0 
+    TEMPMOD  =      0 
+    LAMBDA   =  1e-09 
+    VTL      =  2e+05 m/s
+    LC       =  5e-09 
+    XN       =      3 
+    LLAMBDA  =      0 
+    LVTL     =      0 
+    LXN      =      0 
+    WLAMBDA  =      0 
+    WVTL     =      0 
+    WXN      =      0 
+    PLAMBDA  =      0 
+    PVTL     =      0 
+    PXN      =      0 
+    RNOIA    =  0.577 
+    RNOIB    = 0.5164 
+    SAREF(SA0) =  1e-05 m
+    SBREF(SB0) =  1e-05 m
+    WLOD     =      0 m
+    KU0      =      0 1/m
+    KVSAT    =      0 
+    KVTH0    =      0 m
+    TKU0     =      0 
+    LLODKU0  =      0 
+    WLODKU0  =      0 
+    LLODVTH  =      0 
+    WLODVTH  =      0 
+    LKU0     =      0 
+    WKU0     =      0 
+    PKU0     =      0 
+    LKVTH0   =      0 
+    WKVTH0   =      0 
+    PKVTH0   =      0 
+    STK2     =      0 
+    LODK2    =      1 
+    STETA0   =      0 
+    LODETA0  =      1 
+    LXRCRG1  =      0 
+    WXRCRG1  =      0 
+    PXRCRG1  =      0 
+    LXRCRG2  =      0 
+    WXRCRG2  =      0 
+    PXRCRG2  =      0 
+     *** UCB's BSIM4.4.0 new diode model is activated. ***
+    *** UCB's Diode Model Parameters ***
+    JTSS         =      0 
+    JTSSWS       =      0 
+    JTSSWGS      =      0 
+    JTSD         =      0 
+    JTSSWD       =      0 
+    JTSSWGD      =      0 
+    NJTS         =     20 
+    NJTSSW       =     20 
+    NJTSSWG      =     20 
+    XTSS         =   0.02 
+    XTSSWS       =   0.02 
+    XTSSWGS      =   0.02 
+    XTSD         =   0.02 
+    XTSSWD       =   0.02 
+    XTSSWGD      =   0.02 
+    TNJTS        =      0 
+    TNJTSSW      =      0 
+    TNJTSSWG     =      0 
+    VFBSDOFF     =      0 
+    LVFBSDOFF    =      0 
+    WVFBSDOFF    =      0 
+    PVFBSDOFF    =      0 
+    LINTNOI      = 5.5e-08 
+    VTSS         =     10 
+    VTSD         =     10 
+    VTSSWS       =     10 
+    VTSSWD       =     10 
+    VTSSWGS      =     10 
+    VTSSWGD      =     10 
+    TTDIOMOD     =      1 
+     *** UCB's BSIM4.5.0 new model is activated. ***
+    UD         = 8.228e+18 
+    UD1        = 1.532e+19 
+    UP         =      0 
+    LP         =  1e-08 
+    TVOFF      =      0 
+    TVFBSDOFF  =      0 
+    RBPS0      =     50 
+    RBPSL      =      0 
+    RBPSW      =      0 
+    RBPSNF     =      0 
+    RBPD0      =     50 
+    RBPDL      =      0 
+    RBPDW      =      0 
+    RBPDNF     =      0 
+    RBPBX0     =    100 
+    RBPBXL     =      0 
+    RBPBXW     =      0 
+    RBPBXNF    =      0 
+    RBPBY0     =    100 
+    RBPBYL     =      0 
+    RBPBYW     =      0 
+    RBPBYNF    =      0 
+    RBSBX0     =    100 
+    RBSBY0     =    100 
+    RBDBX0     =    100 
+    RBDBY0     =    100 
+    RBSDBXL    =      0 
+    RBSDBXW    =      0 
+    RBSDBXNF   =      0 
+    RBSDBYL    =      0 
+    RBSDBYW    =      0 
+    RBSDBYNF   =      0 
+    LUD        =      0 
+    LUD1       =      0 
+    LUP        =      0 
+    LLP        =      0 
+    LTVOFF     =      0 
+    LTVFBSDOFF =      0 
+    WUD        =      0 
+    WUD1       =      0 
+    WUP        =      0 
+    WLP        =      0 
+    WTVOFF     =      0 
+    WTVFBSDOFF =      0 
+    PUD        =      0 
+    PUD1       =      0 
+    PUP        =      0 
+    PLP        =      0 
+    PTVOFF     =      0 
+    PTVFBSDOFF =      0 
+    WEB        =      0 
+    WEC        =      0 
+    KVTH0WE    =      0 
+    K2WE       =      0 
+    KU0WE      =      0 
+    SCREF      =  1e-06 
+    WPEMOD     =      0 
+    LKVTH0WE   =      0 
+    LK2WE      =      0 
+    LKU0WE     =      0 
+    WKVTH0WE   =      0 
+    WK2WE      =      0 
+    WKU0WE     =      0 
+    PKVTH0WE   =      0 
+    PK2WE      =      0 
+    PKU0WE     =      0 
+     *** UCB's BSIM4.6.0 new model is activated. ***
+    AGISL     =      0 
+    BGISL     = 2.3e+09 
+    CGISL     =    0.5 
+    EGISL     =    0.8 
+    AIGS      =   0.31 
+    BIGS      =  0.024 
+    CIGS      =   0.03 
+    AIGD      =   0.31 
+    BIGD      =  0.024 
+    CIGD      =   0.03 
+    NJTSD     =     20 
+    NJTSSWD   =     20 
+    NJTSSWGD  =     20 
+    TNJTSD    =      0 
+    TNJTSSWD  =      0 
+    TNJTSSWGD =      0 
+    DLCIGD    =      0 
+    LAGISL    =      0 
+    LBGISL    =      0 
+    LCGISL    =      0 
+    LEGISL    =      0 
+    LAIGS     =      0 
+    LBIGS     =      0 
+    LCIGS     =      0 
+    LAIGD     =      0 
+    LBIGD     =      0 
+    LCIGD     =      0 
+    WAGISL    =      0 
+    WBGISL    =      0 
+    WCGISL    =      0 
+    WEGISL    =      0 
+    WAIGS     =      0 
+    WBIGS     =      0 
+    WCIGS     =      0 
+    WAIGD     =      0 
+    WBIGD     =      0 
+    WCIGD     =      0 
+    PAGISL    =      0 
+    PBGISL    =      0 
+    PCGISL    =      0 
+    PEGISL    =      0 
+    PAIGS     =      0 
+    PBIGS     =      0 
+    PCIGS     =      0 
+    PAIGD     =      0 
+    PBIGD     =      0 
+    PCIGD     =      0 
+     *** UCB's BSIM4.6.1 new model is activated. ***
+    CVCHARGEMOD     = 0
+    MTRLMOD     = 0
+    EOT     = 1.5e-09 
+    VDDEOT     =   -1.5 
+    ADOS     =      1 
+    BDOS     =      1 
+    PHIG     =   4.05 
+    EPSRGATE     =   11.7 
+    EASUB     =   4.05 
+    EPSRSUB     =   11.7 
+    NI0SUB     = 2.147e+09 
+    BG0SUB     =   1.16 
+    TBGASUB     = 0.000702 
+    TBGBSUB     =   1108 
+    MINVCV     =      0 
+    VOFFCV1     =      0 
+    LMINVCV     =      0 
+    WMINVCV     =      0 
+    PMINVCV     =      0 
+    TEMPEOT     =  300.1 
+    LEFFEOT     =      1 
+    WEFFEOT     =     10 
+    UCS         =      1 
+    UCSTE       = -0.004775 
+    LUCS        =      0 
+    LUCSTE      =      0 
+    WUCS        =      0 
+    WUCSTE      =      0 
+    PUCS        =      0 
+    PUCSTE      =      0 
+    JTWEFF      =      0 
+     *** UCB's BSIM4.6.6 new model is activated. ***
+    GIDLMOD     = 0
+    DVTP2       =      0 
+    DVTP3       =      0 
+    DVTP4       =      0 
+    DVTP5       =      0 
+    TNFACTOR    =      0 
+    TETA0       =      0 
+    TVOFFCV     =      0 
+    FGIDL       =      0 
+    KGIDL       =      0 
+    RGIDL       =      1 
+    FGISL       =      0 
+    KGISL       =      0 
+    RGISL       =      1 
+    TNOIC       =      0 
+    RNOIC       =  0.395 
+    LDVTP2      =      0 
+    LDVTP3      =      0 
+    LDVTP4      =      0 
+    LDVTP5      =      0 
+    LTNFACTOR   =      0 
+    LTETA0      =      0 
+    LTVOFFCV    =      0 
+    LFGIDL      =      0 
+    LKGIDL      =      0 
+    LRGIDL      =      0 
+    LFGISL      =      0 
+    LKGISL      =      0 
+    LRGISL      =      0 
+    WDVTP2      =      0 
+    WDVTP3      =      0 
+    WDVTP4      =      0 
+    WDVTP5      =      0 
+    WTNFACTOR   =      0 
+    WTETA0      =      0 
+    WTVOFFCV    =      0 
+    WFGIDL      =      0 
+    WKGIDL      =      0 
+    WRGIDL      =      0 
+    WFGISL      =      0 
+    WKGISL      =      0 
+    WRGISL      =      0 
+    PDVTP2      =      0 
+    PDVTP3      =      0 
+    PDVTP4      =      0 
+    PDVTP5      =      0 
+    PTNFACTOR   =      0 
+    PTETA0      =      0 
+    PTVOFFCV    =      0 
+    PFGIDL      =      0 
+    PKGIDL      =      0 
+    PRGIDL      =      0 
+    PFGISL      =      0 
+    PKGISL      =      0 
+    PRGISL      =      0 
+    MTRLCOMPATMOD      = 0
+  **info** (characterization_tran.sp:7) DC voltage reset to initial transient source value in source 0:vin. new dc=0.0000D+00
+  
+      
+ **info** set option symb=1 internally to help for convergence.
+ *****************************************************************
+ ******  option summary
+ ******
+ runlvl  = 3         bypass  = 2.0000000000  
+  Opening plot unit= 15
+ file=resultados_caracterizacion_20261116_231335_H9qsFY/characterization_tran.pa0
+
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    1.500E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 1.5000000000e+00
+ tphl= 1.7881978361e-11  targ= 1.1183819784e-09   trig= 1.1005000000e-09
+ tplh= 2.5668535276e-11  targ= 1.6261685353e-09   trig= 1.6005000000e-09
+ tpd= 2.1775256818e-11
+ diff= 7.7865569150e-12
+ asym_pct= 3.5758737452e+01
+ tfall= 1.8560753226e-11  targ= 1.1287507267e-09   trig= 1.1101899735e-09
+ trise= 3.2432635561e-11  targ= 1.6455068226e-09   trig= 1.6130741870e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    1.525E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 1.5250000000e+00
+ tphl= 1.8026245081e-11  targ= 1.1185262451e-09   trig= 1.1005000000e-09
+ tplh= 2.5586363768e-11  targ= 1.6260863638e-09   trig= 1.6005000000e-09
+ tpd= 2.1806304424e-11
+ diff= 7.5601186870e-12
+ asym_pct= 3.4669417338e+01
+ tfall= 1.8711296441e-11  targ= 1.1289916745e-09   trig= 1.1102803780e-09
+ trise= 3.2324692341e-11  targ= 1.6453501620e-09   trig= 1.6130254696e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    1.550E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 1.5500000000e+00
+ tphl= 1.8209808895e-11  targ= 1.1187098089e-09   trig= 1.1005000000e-09
+ tplh= 2.5506122426e-11  targ= 1.6260061224e-09   trig= 1.6005000000e-09
+ tpd= 2.1857965660e-11
+ diff= 7.2963135313e-12
+ asym_pct= 3.3380570016e+01
+ tfall= 1.8769435808e-11  targ= 1.1292115980e-09   trig= 1.1104421621e-09
+ trise= 3.2218490575e-11  targ= 1.6451964222e-09   trig= 1.6129779317e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    1.575E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 1.5750000000e+00
+ tphl= 1.8363106879e-11  targ= 1.1188631069e-09   trig= 1.1005000000e-09
+ tplh= 2.5427725569e-11  targ= 1.6259277256e-09   trig= 1.6005000000e-09
+ tpd= 2.1895416224e-11
+ diff= 7.0646186902e-12
+ asym_pct= 3.2265286112e+01
+ tfall= 1.8934113609e-11  targ= 1.1294659336e-09   trig= 1.1105318200e-09
+ trise= 3.2113996662e-11  targ= 1.6450454574e-09   trig= 1.6129314607e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    1.600E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 1.6000000000e+00
+ tphl= 1.8504406455e-11  targ= 1.1190044065e-09   trig= 1.1005000000e-09
+ tplh= 2.5351099487e-11  targ= 1.6258510995e-09   trig= 1.6005000000e-09
+ tpd= 2.1927752971e-11
+ diff= 6.8466930328e-12
+ asym_pct= 3.1223869777e+01
+ tfall= 1.9136675128e-11  targ= 1.1297595343e-09   trig= 1.1106228592e-09
+ trise= 3.2011124682e-11  targ= 1.6448971790e-09   trig= 1.6128860544e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    1.625E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 1.6250000000e+00
+ tphl= 1.8658162692e-11  targ= 1.1191581627e-09   trig= 1.1005000000e-09
+ tplh= 2.5276210411e-11  targ= 1.6257762104e-09   trig= 1.6005000000e-09
+ tpd= 2.1967186552e-11
+ diff= 6.6180477190e-12
+ asym_pct= 3.0126970076e+01
+ tfall= 1.9288709119e-11  targ= 1.1300002703e-09   trig= 1.1107115612e-09
+ trise= 3.1909830358e-11  targ= 1.6447515144e-09   trig= 1.6128416840e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    1.650E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 1.6500000000e+00
+ tphl= 1.8811654613e-11  targ= 1.1193116546e-09   trig= 1.1005000000e-09
+ tplh= 2.5202992368e-11  targ= 1.6257029924e-09   trig= 1.6005000000e-09
+ tpd= 2.2007323491e-11
+ diff= 6.3913377552e-12
+ asym_pct= 2.9041867622e+01
+ tfall= 1.9433745353e-11  targ= 1.1302329648e-09   trig= 1.1107992195e-09
+ trise= 3.1810058045e-11  targ= 1.6446083695e-09   trig= 1.6127983115e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    1.675E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 1.6750000000e+00
+ tphl= 1.8964366617e-11  targ= 1.1194643666e-09   trig= 1.1005000000e-09
+ tplh= 2.5131392952e-11  targ= 1.6256313930e-09   trig= 1.6005000000e-09
+ tpd= 2.2047879785e-11
+ diff= 6.1670263354e-12
+ asym_pct= 2.7971062958e+01
+ tfall= 1.9568981552e-11  targ= 1.1304540030e-09   trig= 1.1108850214e-09
+ trise= 3.1711758008e-11  targ= 1.6444676646e-09   trig= 1.6127559065e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    1.700E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 1.7000000000e+00
+ tphl= 1.9007398268e-11  targ= 1.1195073983e-09   trig= 1.1005000000e-09
+ tplh= 2.5061290793e-11  targ= 1.6255612908e-09   trig= 1.6005000000e-09
+ tpd= 2.2034344531e-11
+ diff= 6.0538925254e-12
+ asym_pct= 2.7474801971e+01
+ tfall= 2.0082871089e-11  targ= 1.1309936730e-09   trig= 1.1109108019e-09
+ trise= 3.1614863118e-11  targ= 1.6443292769e-09   trig= 1.6127144138e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    1.725E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 1.7250000000e+00
+ tphl= 1.9153395364e-11  targ= 1.1196533954e-09   trig= 1.1005000000e-09
+ tplh= 2.4992761505e-11  targ= 1.6254927615e-09   trig= 1.6005000000e-09
+ tpd= 2.2073078434e-11
+ diff= 5.8393661417e-12
+ asym_pct= 2.6454697559e+01
+ tfall= 2.0254211936e-11  targ= 1.1312533771e-09   trig= 1.1109991652e-09
+ trise= 3.1519368104e-11  targ= 1.6441932119e-09   trig= 1.6126738438e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    1.750E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 1.7500000000e+00
+ tphl= 1.9299055855e-11  targ= 1.1197990559e-09   trig= 1.1005000000e-09
+ tplh= 2.4925705991e-11  targ= 1.6254257060e-09   trig= 1.6005000000e-09
+ tpd= 2.2112380923e-11
+ diff= 5.6266501360e-12
+ asym_pct= 2.5445700106e+01
+ tfall= 2.0422654567e-11  targ= 1.1315100436e-09   trig= 1.1110873891e-09
+ trise= 3.1425214550e-11  targ= 1.6440593627e-09   trig= 1.6126341482e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    1.775E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 1.7750000000e+00
+ tphl= 1.9444522810e-11  targ= 1.1199445228e-09   trig= 1.1005000000e-09
+ tplh= 2.4860063066e-11  targ= 1.6253600631e-09   trig= 1.6005000000e-09
+ tpd= 2.2152292938e-11
+ diff= 5.4155402561e-12
+ asym_pct= 2.4446860970e+01
+ tfall= 2.0588439106e-11  targ= 1.1317640705e-09   trig= 1.1111756314e-09
+ trise= 3.1332356268e-11  targ= 1.6439276573e-09   trig= 1.6125953010e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    1.800E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 1.8000000000e+00
+ tphl= 1.9589794533e-11  targ= 1.1200897945e-09   trig= 1.1005000000e-09
+ tplh= 2.4795796609e-11  targ= 1.6252957966e-09   trig= 1.6005000000e-09
+ tpd= 2.2192795571e-11
+ diff= 5.2060020765e-12
+ asym_pct= 2.3458072507e+01
+ tfall= 2.0751751069e-11  targ= 1.1320156444e-09   trig= 1.1112638934e-09
+ trise= 3.1240758331e-11  targ= 1.6437980334e-09   trig= 1.6125572751e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    1.825E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 1.8250000000e+00
+ tphl= 1.9734867887e-11  targ= 1.1202348679e-09   trig= 1.1005000000e-09
+ tplh= 2.4732864766e-11  targ= 1.6252328648e-09   trig= 1.6005000000e-09
+ tpd= 2.2233866327e-11
+ diff= 4.9979968785e-12
+ asym_pct= 2.2479207193e+01
+ tfall= 2.0912762395e-11  targ= 1.1322649366e-09   trig= 1.1113521742e-09
+ trise= 3.1150384498e-11  targ= 1.6436704297e-09   trig= 1.6125200452e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    1.850E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 1.8500000000e+00
+ tphl= 1.9879743556e-11  targ= 1.1203797436e-09   trig= 1.1005000000e-09
+ tplh= 2.4671227017e-11  targ= 1.6251712270e-09   trig= 1.6005000000e-09
+ tpd= 2.2275485286e-11
+ diff= 4.7914834608e-12
+ asym_pct= 2.1510119305e+01
+ tfall= 2.1071633346e-11  targ= 1.1325121098e-09   trig= 1.1114404764e-09
+ trise= 3.1061200157e-11  targ= 1.6435447872e-09   trig= 1.6124835870e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    1.875E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 1.8750000000e+00
+ tphl= 2.0024422617e-11  targ= 1.1205244226e-09   trig= 1.1005000000e-09
+ tplh= 2.4610844557e-11  targ= 1.6251108446e-09   trig= 1.6005000000e-09
+ tpd= 2.2317633587e-11
+ diff= 4.5864219399e-12
+ asym_pct= 2.0550664218e+01
+ tfall= 2.1228512832e-11  targ= 1.1327573151e-09   trig= 1.1115288023e-09
+ trise= 3.0973169396e-11  targ= 1.6434210466e-09   trig= 1.6124478772e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    1.900E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 1.9000000000e+00
+ tphl= 2.0168906580e-11  targ= 1.1206689066e-09   trig= 1.1005000000e-09
+ tplh= 2.4551680944e-11  targ= 1.6250516809e-09   trig= 1.6005000000e-09
+ tpd= 2.2360293762e-11
+ diff= 4.3827743642e-12
+ asym_pct= 1.9600701184e+01
+ tfall= 2.1381510353e-11  targ= 1.1329986643e-09   trig= 1.1116171540e-09
+ trise= 3.0886263180e-11  targ= 1.6432991567e-09   trig= 1.6124128935e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    1.925E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 1.9250000000e+00
+ tphl= 2.0313197160e-11  targ= 1.1208131972e-09   trig= 1.1005000000e-09
+ tplh= 2.4493698664e-11  targ= 1.6249936987e-09   trig= 1.6005000000e-09
+ tpd= 2.2403447912e-11
+ diff= 4.1805015043e-12
+ asym_pct= 1.8660080898e+01
+ tfall= 2.1534895820e-11  targ= 1.1332404292e-09   trig= 1.1117055334e-09
+ trise= 3.0800452037e-11  targ= 1.6431790663e-09   trig= 1.6123786142e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    1.950E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 1.9500000000e+00
+ tphl= 2.0457296581e-11  targ= 1.1209572966e-09   trig= 1.1005000000e-09
+ tplh= 2.4436864142e-11  targ= 1.6249368641e-09   trig= 1.6005000000e-09
+ tpd= 2.2447080362e-11
+ diff= 3.9795675617e-12
+ asym_pct= 1.7728664475e+01
+ tfall= 2.1686670310e-11  targ= 1.1334806126e-09   trig= 1.1117939423e-09
+ trise= 3.0715707407e-11  targ= 1.6430607262e-09   trig= 1.6123450188e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    1.975E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 1.9750000000e+00
+ tphl= 2.0618149810e-11  targ= 1.1211181498e-09   trig= 1.1005000000e-09
+ tplh= 2.4381144275e-11  targ= 1.6248811443e-09   trig= 1.6005000000e-09
+ tpd= 2.2499647043e-11
+ diff= 3.7629944658e-12
+ asym_pct= 1.6724682208e+01
+ tfall= 2.1836947522e-11  targ= 1.1337193298e-09   trig= 1.1118823822e-09
+ trise= 3.0632001832e-11  targ= 1.6429440891e-09   trig= 1.6123120873e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    2.000E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 2.0000000000e+00
+ tphl= 2.0780819046e-11  targ= 1.1212808190e-09   trig= 1.1005000000e-09
+ tplh= 2.4326511025e-11  targ= 1.6248265110e-09   trig= 1.6005000000e-09
+ tpd= 2.2553665036e-11
+ diff= 3.5456919790e-12
+ asym_pct= 1.5721134340e+01
+ tfall= 2.1985833241e-11  targ= 1.1339566880e-09   trig= 1.1119708548e-09
+ trise= 3.0549309080e-11  targ= 1.6428291090e-09   trig= 1.6122798000e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    2.025E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 2.0250000000e+00
+ tphl= 2.0942941475e-11  targ= 1.1214429415e-09   trig= 1.1005000000e-09
+ tplh= 2.4272923501e-11  targ= 1.6247729235e-09   trig= 1.6005000000e-09
+ tpd= 2.2607932488e-11
+ diff= 3.3299820256e-12
+ asym_pct= 1.4729263843e+01
+ tfall= 2.2133426010e-11  targ= 1.1341927922e-09   trig= 1.1120593662e-09
+ trise= 3.0467603762e-11  targ= 1.6427157437e-09   trig= 1.6122481400e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    2.050E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 2.0500000000e+00
+ tphl= 2.1104545111e-11  targ= 1.1216045451e-09   trig= 1.1005000000e-09
+ tplh= 2.4220354460e-11  targ= 1.6247203545e-09   trig= 1.6005000000e-09
+ tpd= 2.2662449786e-11
+ diff= 3.1158093492e-12
+ asym_pct= 1.3748775524e+01
+ tfall= 2.2279817524e-11  targ= 1.1344277252e-09   trig= 1.1121479077e-09
+ trise= 3.0386862300e-11  targ= 1.6426039516e-09   trig= 1.6122170893e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    2.075E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 2.0750000000e+00
+ tphl= 2.1265674217e-11  targ= 1.1217656742e-09   trig= 1.1005000000e-09
+ tplh= 2.4168779240e-11  targ= 1.6246687792e-09   trig= 1.6005000000e-09
+ tpd= 2.2717226729e-11
+ diff= 2.9031050233e-12
+ asym_pct= 1.2779310864e+01
+ tfall= 2.2425093667e-11  targ= 1.1346615788e-09   trig= 1.1122364852e-09
+ trise= 3.0307061614e-11  targ= 1.6424936918e-09   trig= 1.6121866302e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    2.100E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 2.1000000000e+00
+ tphl= 2.1426364026e-11  targ= 1.1219263640e-09   trig= 1.1005000000e-09
+ tplh= 2.4118172691e-11  targ= 1.6246181727e-09   trig= 1.6005000000e-09
+ tpd= 2.2772268359e-11
+ diff= 2.6918086649e-12
+ asym_pct= 1.1820555697e+01
+ tfall= 2.2569334577e-11  targ= 1.1348944342e-09   trig= 1.1123250997e-09
+ trise= 3.0228179089e-11  targ= 1.6423849243e-09   trig= 1.6121567452e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    2.125E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 2.1250000000e+00
+ tphl= 2.1586647259e-11  targ= 1.1220866473e-09   trig= 1.1005000000e-09
+ tplh= 2.4068506415e-11  targ= 1.6245685064e-09   trig= 1.6005000000e-09
+ tpd= 2.2827576837e-11
+ diff= 2.4818591561e-12
+ asym_pct= 1.0872197140e+01
+ tfall= 2.2319979896e-11  targ= 1.1347337319e-09   trig= 1.1124137520e-09
+ trise= 3.0150193605e-11  targ= 1.6422776134e-09   trig= 1.6121274198e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    2.150E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 2.1500000000e+00
+ tphl= 2.1746554318e-11  targ= 1.1222465543e-09   trig= 1.1005000000e-09
+ tplh= 2.4019754998e-11  targ= 1.6245197550e-09   trig= 1.6005000000e-09
+ tpd= 2.2883154658e-11
+ diff= 2.2732006795e-12
+ asym_pct= 9.9339479784e+00
+ tfall= 2.2484197072e-11  targ= 1.1349866400e-09   trig= 1.1125024429e-09
+ trise= 3.0073084649e-11  targ= 1.6421717231e-09   trig= 1.6120986385e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    2.175E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 2.1750000000e+00
+ tphl= 2.1906113483e-11  targ= 1.1224061135e-09   trig= 1.1005000000e-09
+ tplh= 2.3971894579e-11  targ= 1.6244718946e-09   trig= 1.6005000000e-09
+ tpd= 2.2939004031e-11
+ diff= 2.0657810958e-12
+ asym_pct= 9.0055396169e+00
+ tfall= 2.2646567975e-11  targ= 1.1352377410e-09   trig= 1.1125911731e-09
+ trise= 2.9996832300e-11  targ= 1.6420672188e-09   trig= 1.6120703865e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    2.200E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 2.2000000000e+00
+ tphl= 2.2065351083e-11  targ= 1.1225653511e-09   trig= 1.1005000000e-09
+ tplh= 2.3924900277e-11  targ= 1.6244249003e-09   trig= 1.6005000000e-09
+ tpd= 2.2995125680e-11
+ diff= 1.8595491938e-12
+ asym_pct= 8.0867102866e+00
+ tfall= 2.2807215048e-11  targ= 1.1354871580e-09   trig= 1.1126799430e-09
+ trise= 2.9921417897e-11  targ= 1.6419640678e-09   trig= 1.6120426499e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    2.225E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 2.2250000000e+00
+ tphl= 2.2224291663e-11  targ= 1.1227242917e-09   trig= 1.1005000000e-09
+ tplh= 2.3878749932e-11  targ= 1.6243787499e-09   trig= 1.6005000000e-09
+ tpd= 2.3051520798e-11
+ diff= 1.6544582694e-12
+ asym_pct= 7.1772196028e+00
+ tfall= 2.2966252766e-11  targ= 1.1357350060e-09   trig= 1.1127687532e-09
+ trise= 2.9846822965e-11  targ= 1.6418622379e-09   trig= 1.6120154150e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    2.250E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 2.2500000000e+00
+ tphl= 2.2382958144e-11  targ= 1.1228829581e-09   trig= 1.1005000000e-09
+ tplh= 2.3833421475e-11  targ= 1.6243334215e-09   trig= 1.6005000000e-09
+ tpd= 2.3108189810e-11
+ diff= 1.4504633307e-12
+ asym_pct= 6.2768366655e+00
+ tfall= 2.3123788293e-11  targ= 1.1359813925e-09   trig= 1.1128576042e-09
+ trise= 2.9773029886e-11  targ= 1.6417616983e-09   trig= 1.6119886684e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    2.275E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 2.2750000000e+00
+ tphl= 2.2541371977e-11  targ= 1.1230413720e-09   trig= 1.1005000000e-09
+ tplh= 2.3788893635e-11  targ= 1.6242888936e-09   trig= 1.6005000000e-09
+ tpd= 2.3165132806e-11
+ diff= 1.2475216581e-12
+ asym_pct= 5.3853421371e+00
+ tfall= 2.3279922095e-11  targ= 1.1362264185e-09   trig= 1.1129464964e-09
+ trise= 2.9700021653e-11  targ= 1.6416624191e-09   trig= 1.6119623974e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    2.300E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 2.3000000000e+00
+ tphl= 2.2699553289e-11  targ= 1.1231995533e-09   trig= 1.1005000000e-09
+ tplh= 2.3745145883e-11  targ= 1.6242451459e-09   trig= 1.6005000000e-09
+ tpd= 2.3222349586e-11
+ diff= 1.0455925939e-12
+ asym_pct= 4.5025271454e+00
+ tfall= 2.3434748504e-11  targ= 1.1364701786e-09   trig= 1.1130354301e-09
+ trise= 2.9627781862e-11  targ= 1.6415643715e-09   trig= 1.6119365897e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    2.325E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 2.3250000000e+00
+ tphl= 2.2857522312e-11  targ= 1.1233575223e-09   trig= 1.1005000000e-09
+ tplh= 2.3702158390e-11  targ= 1.6242021584e-09   trig= 1.6005000000e-09
+ tpd= 2.3279840351e-11
+ diff= 8.4463607801e-13
+ asym_pct= 3.6281867283e+00
+ tfall= 2.3588356325e-11  targ= 1.1367127630e-09   trig= 1.1131244067e-09
+ trise= 2.9556294670e-11  targ= 1.6414675280e-09   trig= 1.6119112334e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    2.350E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 2.3500000000e+00
+ tphl= 2.3015297329e-11  targ= 1.1235152973e-09   trig= 1.1005000000e-09
+ tplh= 2.3659911991e-11  targ= 1.6241599120e-09   trig= 1.6005000000e-09
+ tpd= 2.3337604660e-11
+ diff= 6.4461466205e-13
+ asym_pct= 2.7621286393e+00
+ tfall= 2.3740829160e-11  targ= 1.1369542560e-09   trig= 1.1132134269e-09
+ trise= 2.9485544779e-11  targ= 1.6413718617e-09   trig= 1.6118863169e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    2.375E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 2.3750000000e+00
+ tphl= 2.3172893630e-11  targ= 1.1236728936e-09   trig= 1.1005000000e-09
+ tplh= 2.3618388156e-11  targ= 1.6241183882e-09   trig= 1.6005000000e-09
+ tpd= 2.3395640893e-11
+ diff= 4.4549452559e-13
+ asym_pct= 1.9041774817e+00
+ tfall= 2.3892245992e-11  targ= 1.1371947355e-09   trig= 1.1133024895e-09
+ trise= 2.9415517405e-11  targ= 1.6412773466e-09   trig= 1.6118618292e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    2.400E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 2.4000000000e+00
+ tphl= 2.3330327795e-11  targ= 1.1238303278e-09   trig= 1.1005000000e-09
+ tplh= 2.3577567212e-11  targ= 1.6240775672e-09   trig= 1.6005000000e-09
+ tpd= 2.3453947503e-11
+ diff= 2.4723941636e-13
+ asym_pct= 1.0541484171e+00
+ tfall= 2.4042681876e-11  targ= 1.1374342770e-09   trig= 1.1133915951e-09
+ trise= 2.9346199170e-11  targ= 1.6411839590e-09   trig= 1.6118377598e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    2.425E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 2.4250000000e+00
+ tphl= 2.3487615868e-11  targ= 1.1239876159e-09   trig= 1.1005000000e-09
+ tplh= 2.3537435199e-11  targ= 1.6240374352e-09   trig= 1.6005000000e-09
+ tpd= 2.3512525534e-11
+ diff= 4.9819331205e-14
+ asym_pct= 2.1188421947e-01
+ tfall= 2.4192208358e-11  targ= 1.1376729526e-09   trig= 1.1134807442e-09
+ trise= 2.9277574541e-11  targ= 1.6410916723e-09   trig= 1.6118140977e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    2.450E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 2.4500000000e+00
+ tphl= 2.3644774008e-11  targ= 1.1241447740e-09   trig= 1.1005000000e-09
+ tplh= 2.3497973862e-11  targ= 1.6239979739e-09   trig= 1.6005000000e-09
+ tpd= 2.3571373935e-11
+ diff=-1.4680014586e-13
+ asym_pct= 6.2278994115e-01
+ tfall= 2.4340894124e-11  targ= 1.1379108318e-09   trig= 1.1135699377e-09
+ trise= 2.9209630882e-11  targ= 1.6410004642e-09   trig= 1.6117908333e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    2.475E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 2.4750000000e+00
+ tphl= 2.3801818895e-11  targ= 1.1243018189e-09   trig= 1.1005000000e-09
+ tplh= 2.3459166899e-11  targ= 1.6239591669e-09   trig= 1.6005000000e-09
+ tpd= 2.3630492897e-11
+ diff=-3.4265199588e-13
+ asym_pct= 1.4500416787e+00
+ tfall= 2.4488805768e-11  targ= 1.1381479824e-09   trig= 1.1136591767e-09
+ trise= 2.9142355259e-11  targ= 1.6409103119e-09   trig= 1.6117679566e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    2.500E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 2.5000000000e+00
+ tphl= 2.3958774535e-11  targ= 1.1244587745e-09   trig= 1.1005000000e-09
+ tplh= 2.3420998657e-11  targ= 1.6239209987e-09   trig= 1.6005000000e-09
+ tpd= 2.3689886596e-11
+ diff=-5.3777587805e-13
+ asym_pct= 2.2700652275e+00
+ tfall= 2.4636008639e-11  targ= 1.1383844770e-09   trig= 1.1137484683e-09
+ trise= 2.9075735083e-11  targ= 1.6408211935e-09   trig= 1.6117454584e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    2.525E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 2.5250000000e+00
+ tphl= 2.4115649281e-11  targ= 1.1246156493e-09   trig= 1.1005000000e-09
+ tplh= 2.3383454020e-11  targ= 1.6238834540e-09   trig= 1.6005000000e-09
+ tpd= 2.3749551650e-11
+ diff=-7.3219526096e-13
+ asym_pct= 3.0829856148e+00
+ tfall= 2.4782569099e-11  targ= 1.1386203745e-09   trig= 1.1138378054e-09
+ trise= 2.9009758124e-11  targ= 1.6407330875e-09   trig= 1.6117233294e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    2.550E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 2.5500000000e+00
+ tphl= 2.4272474543e-11  targ= 1.1247724745e-09   trig= 1.1005000000e-09
+ tplh= 2.3346518169e-11  targ= 1.6238465182e-09   trig= 1.6005000000e-09
+ tpd= 2.3809496356e-11
+ diff=-9.2595637436e-13
+ asym_pct= 3.8890212566e+00
+ tfall= 2.4928555830e-11  targ= 1.1388557540e-09   trig= 1.1139271982e-09
+ trise= 2.8944412648e-11  targ= 1.6406459736e-09   trig= 1.6117015609e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    2.575E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 2.5750000000e+00
+ tphl= 2.4429279699e-11  targ= 1.1249292797e-09   trig= 1.1005000000e-09
+ tplh= 2.3310176834e-11  targ= 1.6238101768e-09   trig= 1.6005000000e-09
+ tpd= 2.3869728267e-11
+ diff=-1.1191028657e-12
+ asym_pct= 4.6883770657e+00
+ tfall= 2.5073748021e-11  targ= 1.1390906979e-09   trig= 1.1140169499e-09
+ trise= 2.8879687211e-11  targ= 1.6405598315e-09   trig= 1.6116801443e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    2.600E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 2.6000000000e+00
+ tphl= 2.4584999601e-11  targ= 1.1250849996e-09   trig= 1.1005000000e-09
+ tplh= 2.3274416263e-11  targ= 1.6237744163e-09   trig= 1.6005000000e-09
+ tpd= 2.3929707932e-11
+ diff=-1.3105833381e-12
+ asym_pct= 5.4768045718e+00
+ tfall= 2.5215722354e-11  targ= 1.1393239656e-09   trig= 1.1141082432e-09
+ trise= 2.8815570612e-11  targ= 1.6404746419e-09   trig= 1.6116590712e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    2.625E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 2.6250000000e+00
+ tphl= 2.4741681295e-11  targ= 1.1252416813e-09   trig= 1.1005000000e-09
+ tplh= 2.3239226962e-11  targ= 1.6237392270e-09   trig= 1.6005000000e-09
+ tpd= 2.3990454128e-11
+ diff=-1.5024543331e-12
+ asym_pct= 6.2627173501e+00
+ tfall= 2.5358089713e-11  targ= 1.1395580405e-09   trig= 1.1141999508e-09
+ trise= 2.8752047900e-11  targ= 1.6403903798e-09   trig= 1.6116383319e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    2.650E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 2.6500000000e+00
+ tphl= 2.4898714003e-11  targ= 1.1253987140e-09   trig= 1.1005000000e-09
+ tplh= 2.3204592676e-11  targ= 1.6237045927e-09   trig= 1.6005000000e-09
+ tpd= 2.4051653340e-11
+ diff=-1.6941213268e-12
+ asym_pct= 7.0436792967e+00
+ tfall= 2.5500575172e-11  targ= 1.1397922716e-09   trig= 1.1142916964e-09
+ trise= 2.8689111815e-11  targ= 1.6403070318e-09   trig= 1.6116179200e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    2.675E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 2.6750000000e+00
+ tphl= 2.5055339067e-11  targ= 1.1255553391e-09   trig= 1.1005000000e-09
+ tplh= 2.3170500211e-11  targ= 1.6236705002e-09   trig= 1.6005000000e-09
+ tpd= 2.4112919639e-11
+ diff=-1.8848388562e-12
+ asym_pct= 7.8167176951e+00
+ tfall= 2.5642512110e-11  targ= 1.1400256697e-09   trig= 1.1143831576e-09
+ trise= 2.8626752786e-11  targ= 1.6402245811e-09   trig= 1.6115978283e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    2.700E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 2.7000000000e+00
+ tphl= 2.5211812323e-11  targ= 1.1257118123e-09   trig= 1.1005000000e-09
+ tplh= 2.3136937185e-11  targ= 1.6236369372e-09   trig= 1.6005000000e-09
+ tpd= 2.4174374754e-11
+ diff=-2.0748751379e-12
+ asym_pct= 8.5829526473e+00
+ tfall= 2.5784151090e-11  targ= 1.1402585967e-09   trig= 1.1144744456e-09
+ trise= 2.8564961120e-11  targ= 1.6401430107e-09   trig= 1.6115780496e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    2.725E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 2.7250000000e+00
+ tphl= 2.5368233668e-11  targ= 1.1258682337e-09   trig= 1.1005000000e-09
+ tplh= 2.3103891694e-11  targ= 1.6236038917e-09   trig= 1.6005000000e-09
+ tpd= 2.4236062681e-11
+ diff=-2.2643419745e-12
+ asym_pct= 9.3428623468e+00
+ tfall= 2.5925612630e-11  targ= 1.1404912142e-09   trig= 1.1145656016e-09
+ trise= 2.8503727306e-11  targ= 1.6400623041e-09   trig= 1.6115585768e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    2.750E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 2.7500000000e+00
+ tphl= 2.5520745301e-11  targ= 1.1260207453e-09   trig= 1.1005000000e-09
+ tplh= 2.3071356056e-11  targ= 1.6235713561e-09   trig= 1.6005000000e-09
+ tpd= 2.4296050678e-11
+ diff=-2.4493892454e-12
+ asym_pct= 1.0081429603e+01
+ tfall= 2.6060381111e-11  targ= 1.1407170150e-09   trig= 1.1146566339e-09
+ trise= 2.8443037136e-11  targ= 1.6399824382e-09   trig= 1.6115394011e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    2.775E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 2.7750000000e+00
+ tphl= 2.5672446201e-11  targ= 1.1261724462e-09   trig= 1.1005000000e-09
+ tplh= 2.3039315661e-11  targ= 1.6235393157e-09   trig= 1.6005000000e-09
+ tpd= 2.4355880931e-11
+ diff=-2.6331305403e-12
+ asym_pct= 1.0811066731e+01
+ tfall= 2.6193731551e-11  targ= 1.1409412684e-09   trig= 1.1147475368e-09
+ trise= 2.8382885640e-11  targ= 1.6399034031e-09   trig= 1.6115205174e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    2.800E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 2.8000000000e+00
+ tphl= 2.5823990278e-11  targ= 1.1263239903e-09   trig= 1.1005000000e-09
+ tplh= 2.3007758977e-11  targ= 1.6235077590e-09   trig= 1.6005000000e-09
+ tpd= 2.4415874627e-11
+ diff=-2.8162313006e-12
+ asym_pct= 1.1534427267e+01
+ tfall= 2.6326794594e-11  targ= 1.1411651138e-09   trig= 1.1148383192e-09
+ trise= 2.8323264897e-11  targ= 1.6398251847e-09   trig= 1.6115019198e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    2.825E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 2.8250000000e+00
+ tphl= 2.5975385257e-11  targ= 1.1264753853e-09   trig= 1.1005000000e-09
+ tplh= 2.2976675457e-11  targ= 1.6234766755e-09   trig= 1.6005000000e-09
+ tpd= 2.4476030357e-11
+ diff=-2.9987097997e-12
+ asym_pct= 1.2251618240e+01
+ tfall= 2.6459618958e-11  targ= 1.1413886036e-09   trig= 1.1149289847e-09
+ trise= 2.8264166392e-11  targ= 1.6397477682e-09   trig= 1.6114836018e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    2.850E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 2.8500000000e+00
+ tphl= 2.6126638077e-11  targ= 1.1266266381e-09   trig= 1.1005000000e-09
+ tplh= 2.2946054861e-11  targ= 1.6234460549e-09   trig= 1.6005000000e-09
+ tpd= 2.4536346469e-11
+ diff=-3.1805832158e-12
+ asym_pct= 1.2962741702e+01
+ tfall= 2.6592247054e-11  targ= 1.1416117836e-09   trig= 1.1150195366e-09
+ trise= 2.8205581828e-11  targ= 1.6396711391e-09   trig= 1.6114655573e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    2.875E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 2.8750000000e+00
+ tphl= 2.6277754989e-11  targ= 1.1267777550e-09   trig= 1.1005000000e-09
+ tplh= 2.2915889862e-11  targ= 1.6234158899e-09   trig= 1.6005000000e-09
+ tpd= 2.4596822425e-11
+ diff=-3.3618651270e-12
+ asym_pct= 1.3667883879e+01
+ tfall= 2.6715564573e-11  targ= 1.1418255427e-09   trig= 1.1151099782e-09
+ trise= 2.8147499368e-11  targ= 1.6395952786e-09   trig= 1.6114477792e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    2.900E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 2.9000000000e+00
+ tphl= 2.6428741650e-11  targ= 1.1269287417e-09   trig= 1.1005000000e-09
+ tplh= 2.2886169263e-11  targ= 1.6233861693e-09   trig= 1.6005000000e-09
+ tpd= 2.4657455457e-11
+ diff=-3.5425723867e-12
+ asym_pct= 1.4367145032e+01
+ tfall= 2.6913025740e-11  targ= 1.1421133385e-09   trig= 1.1152003128e-09
+ trise= 2.8089913056e-11  targ= 1.6395201755e-09   trig= 1.6114302624e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    2.925E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 2.9250000000e+00
+ tphl= 2.6579603198e-11  targ= 1.1270796032e-09   trig= 1.1005000000e-09
+ tplh= 2.2856877320e-11  targ= 1.6233568773e-09   trig= 1.6005000000e-09
+ tpd= 2.4718240259e-11
+ diff=-3.7227258786e-12
+ asym_pct= 1.5060642827e+01
+ tfall= 2.7128857157e-11  targ= 1.1424194008e-09   trig= 1.1152905437e-09
+ trise= 2.8032822833e-11  targ= 1.6394458256e-09   trig= 1.6114130027e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    2.950E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 2.9500000000e+00
+ tphl= 2.6730344318e-11  targ= 1.1272303443e-09   trig= 1.1005000000e-09
+ tplh= 2.2828007448e-11  targ= 1.6233280074e-09   trig= 1.6005000000e-09
+ tpd= 2.4779175883e-11
+ diff=-3.9023368701e-12
+ asym_pct= 1.5748453009e+01
+ tfall= 2.7339913989e-11  targ= 1.1427205880e-09   trig= 1.1153806740e-09
+ trise= 2.7976218625e-11  targ= 1.6393722129e-09   trig= 1.6113959943e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    2.975E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 2.9750000000e+00
+ tphl= 2.6880969289e-11  targ= 1.1273809693e-09   trig= 1.1005000000e-09
+ tplh= 2.2799554353e-11  targ= 1.6232995544e-09   trig= 1.6005000000e-09
+ tpd= 2.4840261821e-11
+ diff=-4.0814149360e-12
+ asym_pct= 1.6430643789e+01
+ tfall= 2.7546473666e-11  targ= 1.1430171806e-09   trig= 1.1154707070e-09
+ trise= 2.7920089275e-11  targ= 1.6392993206e-09   trig= 1.6113792314e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    3.000E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 3.0000000000e+00
+ tphl= 2.7031482017e-11  targ= 1.1275314820e-09   trig= 1.1005000000e-09
+ tplh= 2.2771509355e-11  targ= 1.6232715094e-09   trig= 1.6005000000e-09
+ tpd= 2.4901495686e-11
+ diff=-4.2599726621e-12
+ asym_pct= 1.7107296348e+01
+ tfall= 2.7748796501e-11  targ= 1.1433094423e-09   trig= 1.1155606458e-09
+ trise= 2.7864427728e-11  targ= 1.6392271366e-09   trig= 1.6113627089e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    3.025E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 3.0250000000e+00
+ tphl= 2.7181886093e-11  targ= 1.1276818861e-09   trig= 1.1005000000e-09
+ tplh= 2.2743864670e-11  targ= 1.6232438647e-09   trig= 1.6005000000e-09
+ tpd= 2.4962875382e-11
+ diff=-4.4380214229e-12
+ asym_pct= 1.7778486472e+01
+ tfall= 2.7947126376e-11  targ= 1.1435976199e-09   trig= 1.1156504935e-09
+ trise= 2.7809226654e-11  targ= 1.6391556486e-09   trig= 1.6113464220e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    3.050E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 3.0500000000e+00
+ tphl= 2.7332184684e-11  targ= 1.1278321847e-09   trig= 1.1005000000e-09
+ tplh= 2.2716609807e-11  targ= 1.6232166098e-09   trig= 1.6005000000e-09
+ tpd= 2.5024397245e-11
+ diff=-4.6155748773e-12
+ asym_pct= 1.8444299905e+01
+ tfall= 2.8141691677e-11  targ= 1.1438819450e-09   trig= 1.1157402533e-09
+ trise= 2.7754481479e-11  targ= 1.6390848472e-09   trig= 1.6113303657e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    3.075E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 3.0750000000e+00
+ tphl= 2.7482380727e-11  targ= 1.1279823807e-09   trig= 1.1005000000e-09
+ tplh= 2.2689737759e-11  targ= 1.6231897378e-09   trig= 1.6005000000e-09
+ tpd= 2.5086059243e-11
+ diff=-4.7926429680e-12
+ asym_pct= 1.9104806066e+01
+ tfall= 2.8332706065e-11  targ= 1.1441626342e-09   trig= 1.1158299282e-09
+ trise= 2.7717192689e-11  targ= 1.6390317281e-09   trig= 1.6113145354e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    3.100E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 3.1000000000e+00
+ tphl= 2.7632476797e-11  targ= 1.1281324768e-09   trig= 1.1005000000e-09
+ tplh= 2.2663238976e-11  targ= 1.6231632390e-09   trig= 1.6005000000e-09
+ tpd= 2.5147857886e-11
+ diff=-4.9692378208e-12
+ asym_pct= 1.9760083914e+01
+ tfall= 2.8520369549e-11  targ= 1.1444398908e-09   trig= 1.1159195212e-09
+ trise= 2.7697827180e-11  targ= 1.6389967537e-09   trig= 1.6112989265e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    3.125E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 3.1250000000e+00
+ tphl= 2.7782475212e-11  targ= 1.1282824752e-09   trig= 1.1005000000e-09
+ tplh= 2.2637100974e-11  targ= 1.6231371010e-09   trig= 1.6005000000e-09
+ tpd= 2.5209788093e-11
+ diff=-5.1453742386e-12
+ asym_pct= 2.0410224075e+01
+ tfall= 2.8704869492e-11  targ= 1.1447139049e-09   trig= 1.1160090355e-09
+ trise= 2.7678722660e-11  targ= 1.6389622581e-09   trig= 1.6112835354e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    3.150E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 3.1500000000e+00
+ tphl= 2.7932377933e-11  targ= 1.1284323779e-09   trig= 1.1005000000e-09
+ tplh= 2.2611323638e-11  targ= 1.6231113236e-09   trig= 1.6005000000e-09
+ tpd= 2.5271850785e-11
+ diff=-5.3210542960e-12
+ asym_pct= 2.1055261608e+01
+ tfall= 2.8886381483e-11  targ= 1.1449848553e-09   trig= 1.1160984738e-09
+ trise= 2.7659887832e-11  targ= 1.6389282443e-09   trig= 1.6112683565e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    3.175E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 3.1750000000e+00
+ tphl= 2.8082186655e-11  targ= 1.1285821867e-09   trig= 1.1005000000e-09
+ tplh= 2.2585917601e-11  targ= 1.6230859176e-09   trig= 1.6005000000e-09
+ tpd= 2.5334052128e-11
+ diff=-5.4962690537e-12
+ asym_pct= 2.1695183328e+01
+ tfall= 2.9065070314e-11  targ= 1.1452529097e-09   trig= 1.1161878393e-09
+ trise= 2.7641354180e-11  targ= 1.6388947362e-09   trig= 1.6112533820e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    3.200E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 3.2000000000e+00
+ tphl= 2.8231276410e-11  targ= 1.1287312764e-09   trig= 1.1005000000e-09
+ tplh= 2.2560858078e-11  targ= 1.6230608581e-09   trig= 1.6005000000e-09
+ tpd= 2.5396067244e-11
+ diff=-5.6704183321e-12
+ asym_pct= 2.2327938722e+01
+ tfall= 2.9240991127e-11  targ= 1.1455174669e-09   trig= 1.1162764758e-09
+ trise= 2.7623077289e-11  targ= 1.6388616886e-09   trig= 1.6112386113e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    3.225E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 3.2250000000e+00
+ tphl= 2.8380898857e-11  targ= 1.1288808989e-09   trig= 1.1005000000e-09
+ tplh= 2.2536138455e-11  targ= 1.6230361385e-09   trig= 1.6005000000e-09
+ tpd= 2.5458518656e-11
+ diff=-5.8447604024e-12
+ asym_pct= 2.2957975212e+01
+ tfall= 2.9414506551e-11  targ= 1.1457802083e-09   trig= 1.1163657017e-09
+ trise= 2.7605051674e-11  targ= 1.6388290921e-09   trig= 1.6112240404e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    3.250E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 3.2500000000e+00
+ tphl= 2.8530430811e-11  targ= 1.1290304308e-09   trig= 1.1005000000e-09
+ tplh= 2.2511750530e-11  targ= 1.6230117505e-09   trig= 1.6005000000e-09
+ tpd= 2.5521090671e-11
+ diff=-6.0186802810e-12
+ asym_pct= 2.3583162486e+01
+ tfall= 2.9585635625e-11  targ= 1.1460404990e-09   trig= 1.1164548633e-09
+ trise= 2.7587268629e-11  targ= 1.6387969339e-09   trig= 1.6112096653e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    3.275E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 3.2750000000e+00
+ tphl= 2.8679872961e-11  targ= 1.1291798730e-09   trig= 1.1005000000e-09
+ tplh= 2.2487687554e-11  targ= 1.6229876876e-09   trig= 1.6005000000e-09
+ tpd= 2.5583780258e-11
+ diff=-6.1921854066e-12
+ asym_pct= 2.4203559225e+01
+ tfall= 2.9754507716e-11  targ= 1.1462984711e-09   trig= 1.1165439634e-09
+ trise= 2.7569722369e-11  targ= 1.6387652045e-09   trig= 1.6111954821e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    3.300E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 3.3000000000e+00
+ tphl= 2.8829225789e-11  targ= 1.1293292258e-09   trig= 1.1005000000e-09
+ tplh= 2.2463944438e-11  targ= 1.6229639444e-09   trig= 1.6005000000e-09
+ tpd= 2.5646585113e-11
+ diff=-6.3652813504e-12
+ asym_pct= 2.4819215978e+01
+ tfall= 2.9921244916e-11  targ= 1.1465542494e-09   trig= 1.1166330045e-09
+ trise= 2.7552409416e-11  targ= 1.6387338966e-09   trig= 1.6111814872e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    3.325E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 3.3250000000e+00
+ tphl= 2.8978489601e-11  targ= 1.1294784896e-09   trig= 1.1005000000e-09
+ tplh= 2.2440515490e-11  targ= 1.6229405155e-09   trig= 1.6005000000e-09
+ tpd= 2.5709502546e-11
+ diff=-6.5379741117e-12
+ asym_pct= 2.5430185201e+01
+ tfall= 3.0085962559e-11  targ= 1.1468079521e-09   trig= 1.1167219895e-09
+ trise= 2.7535325117e-11  targ= 1.6387030020e-09   trig= 1.6111676769e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    3.350E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 3.3500000000e+00
+ tphl= 2.9127664539e-11  targ= 1.1296276645e-09   trig= 1.1005000000e-09
+ tplh= 2.2417395059e-11  targ= 1.6229173951e-09   trig= 1.6005000000e-09
+ tpd= 2.5772529799e-11
+ diff=-6.7102694797e-12
+ asym_pct= 2.6036518464e+01
+ tfall= 3.0248769675e-11  targ= 1.1470596906e-09   trig= 1.1168109209e-09
+ trise= 2.7518464985e-11  targ= 1.6386725127e-09   trig= 1.6111540477e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    3.375E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 3.3750000000e+00
+ tphl= 2.9276750594e-11  targ= 1.1297767506e-09   trig= 1.1005000000e-09
+ tplh= 2.2394577389e-11  targ= 1.6228945774e-09   trig= 1.6005000000e-09
+ tpd= 2.5835663992e-11
+ diff=-6.8821732054e-12
+ asym_pct= 2.6638267194e+01
+ tfall= 3.0409769406e-11  targ= 1.1473095707e-09   trig= 1.1168998013e-09
+ trise= 2.7501824185e-11  targ= 1.6386424204e-09   trig= 1.6111405962e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    3.400E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 3.4000000000e+00
+ tphl= 2.9425747635e-11  targ= 1.1299257476e-09   trig= 1.1005000000e-09
+ tplh= 2.2372055897e-11  targ= 1.6228720559e-09   trig= 1.6005000000e-09
+ tpd= 2.5898901766e-11
+ diff=-7.0536917374e-12
+ asym_pct= 2.7235485895e+01
+ tfall= 3.0569059373e-11  targ= 1.1475576926e-09   trig= 1.1169886332e-09
+ trise= 2.7485396165e-11  targ= 1.6386127152e-09   trig= 1.6111273190e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    3.425E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 3.4250000000e+00
+ tphl= 2.9574655420e-11  targ= 1.1300746554e-09   trig= 1.1005000000e-09
+ tplh= 2.2349825788e-11  targ= 1.6228498258e-09   trig= 1.6005000000e-09
+ tpd= 2.5962240604e-11
+ diff=-7.2248296317e-12
+ asym_pct= 2.7828220768e+01
+ tfall= 3.0726732009e-11  targ= 1.1478041511e-09   trig= 1.1170774191e-09
+ trise= 2.7469177757e-11  targ= 1.6385833906e-09   trig= 1.6111142129e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    3.450E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 3.4500000000e+00
+ tphl= 2.9723465325e-11  targ= 1.1302234653e-09   trig= 1.1005000000e-09
+ tplh= 2.2327881963e-11  targ= 1.6228278820e-09   trig= 1.6005000000e-09
+ tpd= 2.6025673644e-11
+ diff=-7.3955833627e-12
+ asym_pct= 2.8416491591e+01
+ tfall= 3.0882875370e-11  targ= 1.1480490280e-09   trig= 1.1171661526e-09
+ trise= 2.7453164917e-11  targ= 1.6385544394e-09   trig= 1.6111012745e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    3.475E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 3.4750000000e+00
+ tphl= 2.9872213436e-11  targ= 1.1303722134e-09   trig= 1.1005000000e-09
+ tplh= 2.2306219159e-11  targ= 1.6228062192e-09   trig= 1.6005000000e-09
+ tpd= 2.6089216297e-11
+ diff=-7.5659942769e-12
+ asym_pct= 2.9000465904e+01
+ tfall= 3.1037415631e-11  targ= 1.1482922687e-09   trig= 1.1172548531e-09
+ trise= 2.7437353253e-11  targ= 1.6385258541e-09   trig= 1.6110885008e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    3.500E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 3.5000000000e+00
+ tphl= 3.0020881419e-11  targ= 1.1305208814e-09   trig= 1.1005000000e-09
+ tplh= 2.2284832238e-11  targ= 1.6227848322e-09   trig= 1.6005000000e-09
+ tpd= 2.6152856829e-11
+ diff=-7.7360491802e-12
+ asym_pct= 2.9580130503e+01
+ tfall= 3.1190453370e-11  targ= 1.1485339679e-09   trig= 1.1173435146e-09
+ trise= 2.7421738554e-11  targ= 1.6384976273e-09   trig= 1.6110758888e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    3.525E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 3.5250000000e+00
+ tphl= 3.0169451146e-11  targ= 1.1306694511e-09   trig= 1.1005000000e-09
+ tplh= 2.2263716193e-11  targ= 1.6227637162e-09   trig= 1.6005000000e-09
+ tpd= 2.6216583670e-11
+ diff=-7.9057349537e-12
+ asym_pct= 3.0155473548e+01
+ tfall= 3.1342186664e-11  targ= 1.1487743260e-09   trig= 1.1174321393e-09
+ trise= 2.7406316682e-11  targ= 1.6384697520e-09   trig= 1.6110634353e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    3.550E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 3.5500000000e+00
+ tphl= 3.0317922481e-11  targ= 1.1308179225e-09   trig= 1.1005000000e-09
+ tplh= 2.2242866183e-11  targ= 1.6227428662e-09   trig= 1.6005000000e-09
+ tpd= 2.6280394332e-11
+ diff=-8.0750562980e-12
+ asym_pct= 3.0726541604e+01
+ tfall= 3.1498840894e-11  targ= 1.1490195704e-09   trig= 1.1175207295e-09
+ trise= 2.7391083560e-11  targ= 1.6384422213e-09   trig= 1.6110511378e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    3.575E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 3.5750000000e+00
+ tphl= 3.0466295112e-11  targ= 1.1309662951e-09   trig= 1.1005000000e-09
+ tplh= 2.2222277318e-11  targ= 1.6227222773e-09   trig= 1.6005000000e-09
+ tpd= 2.6344286215e-11
+ diff=-8.2440177938e-12
+ asym_pct= 3.1293380761e+01
+ tfall= 3.1648043520e-11  targ= 1.1492573308e-09   trig= 1.1176092873e-09
+ trise= 2.7376035417e-11  targ= 1.6384150284e-09   trig= 1.6110389930e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    3.600E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 3.6000000000e+00
+ tphl= 3.0614568835e-11  targ= 1.1311145688e-09   trig= 1.1005000000e-09
+ tplh= 2.2201944985e-11  targ= 1.6227019450e-09   trig= 1.6005000000e-09
+ tpd= 2.6408256910e-11
+ diff=-8.4126238496e-12
+ asym_pct= 3.1856036081e+01
+ tfall= 3.1796133489e-11  targ= 1.1494939482e-09   trig= 1.1176978147e-09
+ trise= 2.7361168403e-11  targ= 1.6383881669e-09   trig= 1.6110269984e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    3.625E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 3.6250000000e+00
+ tphl= 3.0762743368e-11  targ= 1.1312627434e-09   trig= 1.1005000000e-09
+ tplh= 2.2181878257e-11  targ= 1.6226818783e-09   trig= 1.6005000000e-09
+ tpd= 2.6472310813e-11
+ diff=-8.5808651115e-12
+ asym_pct= 3.2414492155e+01
+ tfall= 3.1943173565e-11  targ= 1.1497294873e-09   trig= 1.1177863137e-09
+ trise= 2.7346500121e-11  targ= 1.6383616519e-09   trig= 1.6110151517e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    3.650E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 3.6500000000e+00
+ tphl= 3.0910818415e-11  targ= 1.1314108184e-09   trig= 1.1005000000e-09
+ tplh= 2.2162045453e-11  targ= 1.6226620455e-09   trig= 1.6005000000e-09
+ tpd= 2.6536431934e-11
+ diff=-8.7487729617e-12
+ asym_pct= 3.2968912262e+01
+ tfall= 3.2089223121e-11  targ= 1.1499640094e-09   trig= 1.1178747863e-09
+ trise= 2.7331984282e-11  targ= 1.6383354338e-09   trig= 1.6110034495e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    3.675E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 3.6750000000e+00
+ tphl= 3.1058793778e-11  targ= 1.1315587938e-09   trig= 1.1005000000e-09
+ tplh= 2.2142455818e-11  targ= 1.6226424558e-09   trig= 1.6005000000e-09
+ tpd= 2.6600624798e-11
+ diff=-8.9163379607e-12
+ asym_pct= 3.3519280199e+01
+ tfall= 3.2234338294e-11  targ= 1.1501975728e-09   trig= 1.1179632345e-09
+ trise= 2.7317638845e-11  targ= 1.6383095284e-09   trig= 1.6109918895e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    3.700E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 3.7000000000e+00
+ tphl= 3.1206669366e-11  targ= 1.1317066694e-09   trig= 1.1005000000e-09
+ tplh= 2.2123105101e-11  targ= 1.6226231051e-09   trig= 1.6005000000e-09
+ tpd= 2.6664887233e-11
+ diff=-9.0835642647e-12
+ asym_pct= 3.4065639150e+01
+ tfall= 3.2378572129e-11  targ= 1.1504302324e-09   trig= 1.1180516603e-09
+ trise= 2.7303460434e-11  targ= 1.6382839297e-09   trig= 1.6109804693e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    3.725E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 3.7250000000e+00
+ tphl= 3.1354442073e-11  targ= 1.1318544421e-09   trig= 1.1005000000e-09
+ tplh= 2.2103989150e-11  targ= 1.6226039892e-09   trig= 1.6005000000e-09
+ tpd= 2.6729215612e-11
+ diff=-9.2504529228e-12
+ asym_pct= 3.4608022387e+01
+ tfall= 3.2521975195e-11  targ= 1.1506620378e-09   trig= 1.1181400626e-09
+ trise= 2.7289445761e-11  targ= 1.6382586321e-09   trig= 1.6109691863e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    3.750E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 3.7500000000e+00
+ tphl= 3.1502114102e-11  targ= 1.1320021141e-09   trig= 1.1005000000e-09
+ tplh= 2.2085103907e-11  targ= 1.6225851039e-09   trig= 1.6005000000e-09
+ tpd= 2.6793609005e-11
+ diff=-9.4170101950e-12
+ asym_pct= 3.5146479122e+01
+ tfall= 3.2664594703e-11  targ= 1.1508930404e-09   trig= 1.1182284457e-09
+ trise= 2.7275591634e-11  targ= 1.6382336299e-09   trig= 1.6109580382e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    3.775E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 3.7750000000e+00
+ tphl= 3.1649684660e-11  targ= 1.1321496847e-09   trig= 1.1005000000e-09
+ tplh= 2.2066445290e-11  targ= 1.6225664453e-09   trig= 1.6005000000e-09
+ tpd= 2.6858064975e-11
+ diff=-9.5832393694e-12
+ asym_pct= 3.5681049168e+01
+ tfall= 3.2806475692e-11  targ= 1.1511232864e-09   trig= 1.1183168107e-09
+ trise= 2.7261895229e-11  targ= 1.6382089176e-09   trig= 1.6109470224e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    3.800E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 3.8000000000e+00
+ tphl= 3.1797152193e-11  targ= 1.1322971522e-09   trig= 1.1005000000e-09
+ tplh= 2.2048009337e-11  targ= 1.6225480093e-09   trig= 1.6005000000e-09
+ tpd= 2.6922580765e-11
+ diff=-9.7491428558e-12
+ asym_pct= 3.6211769373e+01
+ tfall= 3.2947661020e-11  targ= 1.1513528187e-09   trig= 1.1184051576e-09
+ trise= 2.7248303184e-11  targ= 1.6381844704e-09   trig= 1.6109361673e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    3.825E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 3.8250000000e+00
+ tphl= 3.1944518529e-11  targ= 1.1324445185e-09   trig= 1.1005000000e-09
+ tplh= 2.2029793465e-11  targ= 1.6225297935e-09   trig= 1.6005000000e-09
+ tpd= 2.6987155997e-11
+ diff=-9.9147250648e-12
+ asym_pct= 3.6738680674e+01
+ tfall= 3.3088190172e-11  targ= 1.1515816806e-09   trig= 1.1184934904e-09
+ trise= 2.7234911157e-11  targ= 1.6381603228e-09   trig= 1.6109254116e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    3.850E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 3.8500000000e+00
+ tphl= 3.2091784202e-11  targ= 1.1325917842e-09   trig= 1.1005000000e-09
+ tplh= 2.2011793024e-11  targ= 1.6225117930e-09   trig= 1.6005000000e-09
+ tpd= 2.7051788613e-11
+ diff=-1.0079991179e-11
+ asym_pct= 3.7261828868e+01
+ tfall= 3.3228104279e-11  targ= 1.1518099143e-09   trig= 1.1185818100e-09
+ trise= 2.7221667767e-11  targ= 1.6381364497e-09   trig= 1.6109147819e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    3.875E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 3.8750000000e+00
+ tphl= 3.2238947707e-11  targ= 1.1327389477e-09   trig= 1.1005000000e-09
+ tplh= 2.1916673328e-11  targ= 1.6224166733e-09   trig= 1.6005000000e-09
+ tpd= 2.7077810518e-11
+ diff=-1.0322274379e-11
+ asym_pct= 3.8120786656e+01
+ tfall= 3.3367432709e-11  targ= 1.1520375515e-09   trig= 1.1186701188e-09
+ trise= 2.7189379670e-11  targ= 1.6381165930e-09   trig= 1.6109272133e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    3.900E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 3.9000000000e+00
+ tphl= 3.2386009637e-11  targ= 1.1328860096e-09   trig= 1.1005000000e-09
+ tplh= 2.1870996649e-11  targ= 1.6223709966e-09   trig= 1.6005000000e-09
+ tpd= 2.7128503143e-11
+ diff=-1.0515012988e-11
+ asym_pct= 3.8760019057e+01
+ tfall= 3.3506212453e-11  targ= 1.1522646301e-09   trig= 1.1187584177e-09
+ trise= 2.7103407061e-11  targ= 1.6380275685e-09   trig= 1.6109241614e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    3.925E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 3.9250000000e+00
+ tphl= 3.2532969951e-11  targ= 1.1330329700e-09   trig= 1.1005000000e-09
+ tplh= 2.2076937010e-11  targ= 1.6225769370e-09   trig= 1.6005000000e-09
+ tpd= 2.7304953480e-11
+ diff=-1.0456032941e-11
+ asym_pct= 3.8293538746e+01
+ tfall= 3.3644475481e-11  targ= 1.1524911835e-09   trig= 1.1188467080e-09
+ trise= 2.7436125951e-11  targ= 1.6383460134e-09   trig= 1.6109098874e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    3.950E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 3.9500000000e+00
+ tphl= 3.2817185300e-11  targ= 1.1333171853e-09   trig= 1.1005000000e-09
+ tplh= 2.1941801971e-11  targ= 1.6224418020e-09   trig= 1.6005000000e-09
+ tpd= 2.7379493635e-11
+ diff=-1.0875383330e-11
+ asym_pct= 3.9720907460e+01
+ tfall= 3.4222107226e-11  targ= 1.1531476502e-09   trig= 1.1189255430e-09
+ trise= 2.7170002651e-11  targ= 1.6380434920e-09   trig= 1.6108734894e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    3.975E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 3.9750000000e+00
+ tphl= 3.2826607848e-11  targ= 1.1333266078e-09   trig= 1.1005000000e-09
+ tplh= 2.2035214915e-11  targ= 1.6225352149e-09   trig= 1.6005000000e-09
+ tpd= 2.7430911381e-11
+ diff=-1.0791392933e-11
+ asym_pct= 3.9340263919e+01
+ tfall= 3.3919567509e-11  targ= 1.1529428586e-09   trig= 1.1190232911e-09
+ trise= 2.7369538465e-11  targ= 1.6382650807e-09   trig= 1.6108955423e-09
+
+          ***** job concluded
+ **info** dc convergence successful at Newton-Raphson method 
+
+   *** parameter ratio =    4.000E+00 ***
+
+ ******
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** transient analysis tnom=  25.000 temp=  70.000 ******
+ ratio_used= 4.0000000000e+00
+ tphl= 3.2973212137e-11  targ= 1.1334732121e-09   trig= 1.1005000000e-09
+ tplh= 2.2015033723e-11  targ= 1.6225150337e-09   trig= 1.6005000000e-09
+ tpd= 2.7494122930e-11
+ diff=-1.0958178414e-11
+ asym_pct= 3.9856439291e+01
+ tfall= 3.4056464908e-11  targ= 1.1531679747e-09   trig= 1.1191115097e-09
+ trise= 2.7340499673e-11  targ= 1.6382280873e-09   trig= 1.6108875876e-09
+
+          ***** job concluded
+ ******  
+ * barrido fo1; entrada casi ideal, medidas en el segundo ciclo.
+
+ ****** job statistics summary tnom=  25.000 temp=  70.000 ******
+  
+ ******  Machine Information  ******
+ CPU:
+ model name	: Intel(R) Xeon(R) CPU E5-2630 v4 @ 2.20GHz
+ cpu MHz	: 2199.996
+ CPU(s)		: 24
+  
+ OS:
+ Linux version 4.18.0-553.74.1.el8_10.x86_64 (mockbuild@x86-64-03.build.eng.rdu2.redhat.com) (gcc version 8.5.0 20210514 (Red Hat 8.5.0-28) (GCC)) #1 SMP Sun Sep 7 09:23:35 EDT 2025
+
+ System loadavg : 2.22 2.66 2.69 5/14042 2354197
+
+
+  ******  PrimeSim HSPICE Threads Information  ******
+
+  Command Line Threads Count :     1
+  Available CPU Count        :    24
+  Actual Threads Count       :     1
+
+
+  ******  Circuit Statistics  ******
+  # nodes       =       6 # elements   =       7
+  # resistors   =       0 # capacitors =       0 # inductors   =       0
+  # mutual_inds =       0 # vccs       =       0 # vcvs        =       0
+  # cccs        =       0 # ccvs       =       0 # volt_srcs   =       3
+  # curr_srcs   =       0 # diodes     =       0 # bjts        =       0
+  # jfets       =       0 # mosfets    =       4 # U elements  =       0
+  # T elements  =       0 # W elements =       0 # B elements  =       0
+  # S elements  =       0 # P elements =       0 # va device   =       0
+  # vector_srcs =       0 # N elements =       0
+
+
+  ******  Runtime Statistics (seconds)  ******
+
+  analysis           time    # points   tot. iter  conv.iter
+  op point           0.04           1         303
+  transient          1.30      606101       42838       17416 rev=      1205
+  readin             1.88
+  errchk             0.02
+  setup              0.00
+  output             0.01
+
+
+           peak memory used        524.35 megabytes
+           total cpu time            3.31 seconds
+           total elapsed time        3.40 seconds
+           job started at     23:13:46 11/16/2026
+           job ended   at     23:13:50 11/16/2026
+           job total runtime         3.40 seconds
+
+
+ lic: Release hspice token(s) 
+ lic: total license checkout elapse time:        0.08(s)
