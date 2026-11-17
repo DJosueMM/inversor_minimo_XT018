@@ -1,0 +1,5 @@
+$DATA1 SOURCE='PrimeSim HSPICE' VERSION='U-2023.03-SP2 linux6' PARAM_COUNT=0
+$OPTION MEASFORM=3
+.TITLE '* weste 8.4.5: matched-input fo3/fo4 difference, minimum-width duts.'
+ratio_used,tphl3,tphl4,tplh3,tplh4,tin_r,tin_f,tr3,tf3,tr4,tf4,temper,alter#
+ 2.466242228e+00, 6.726526528e-11, 7.600881852e-11, 7.100183081e-11, 8.114445502e-11, 7.672639407e-11, 6.572747886e-11, 7.293295423e-11, 6.527023516e-11, 8.913106125e-11, 7.968740282e-11, 7.000000000e+01,1

@@ -1,0 +1,6 @@
+$DATA1 SOURCE='PrimeSim HSPICE' VERSION='U-2023.03-SP2 linux6' PARAM_COUNT=2
+$OPTION MEASFORM=3
+.TITLE '* direct dc verification of analytical sizing and current iteration.'
+index,ratio,ratio_used,vm,isc_peak,temper,alter#
+1, 6.264627407e+00, 6.264627407e+00, 9.510652720e-01, 3.462914295e-05, 7.000000000e+01,1
+2, 2.466242228e+00, 2.466242228e+00, 8.839713912e-01, 2.415330867e-05, 7.000000000e+01,1
